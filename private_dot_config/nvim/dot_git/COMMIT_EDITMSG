@@ -1,0 +1,27 @@
+Fix ruby language server name
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is ahead of 'origin/main' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   lua/plugins/lsp.lua
+#
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/lua/plugins/lsp.lua b/lua/plugins/lsp.lua
+index 53b10c2..20859cd 100644
+--- a/lua/plugins/lsp.lua
++++ b/lua/plugins/lsp.lua
+@@ -61,7 +61,7 @@ return {
+     -- Use a loop to conveniently call 'setup' on multiple servers and
+     -- map buffer local keybindings when the language server attaches
+     local servers = { 'tsserver', 'clojure_lsp', 'sourcekit', 'pyright', 'vimls', 'dockerls', 'terraformls', 'graphql',
+-      'dartls', 'lua_ls', 'prismals', 'ltex', 'ruby-ls' }
++      'dartls', 'lua_ls', 'prismals', 'ltex', 'ruby_ls' }
+     for _, lsp in ipairs(servers) do
+       nvim_lsp[lsp].setup {
+         on_attach = on_attach,
