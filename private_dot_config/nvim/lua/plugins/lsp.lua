@@ -75,19 +75,8 @@ return {
     end
 
     local ensured_installed_packages = {
-      "lua-language-server",
-
-      "css-lsp",
-      "html-lsp",
-      "json-lsp",
-      "emmet-ls",
-
       "typescript-language-server",
       "prettier",
-
-      "yaml-language-server",
-      "yamlfmt",
-      "yamllint",
     }
 
     for _, package in ipairs(ensured_installed_packages) do
