@@ -2,3 +2,5 @@
 fcab9af414316f874d0d2363300bc3c05f9e99eb 012d5b61ac86632d3e6aeb34611caf0728ebdf4a Alon Dahari <climbinghobo@gmail.com> 1711313210 +0000	commit: Remove copilot-cmp from lazy-lock.json
 012d5b61ac86632d3e6aeb34611caf0728ebdf4a 9f6fdc691f7d91d5126561ea1e1876ffefb5c596 Alon Dahari <climbinghobo@gmail.com> 1712002506 +0100	commit: Update README
 9f6fdc691f7d91d5126561ea1e1876ffefb5c596 ae6d4506f21771418aeee3ce92e9aeb5e8884357 Alon Dahari <climbinghobo@gmail.com> 1712002517 +0100	commit: Fix ruby language server name
+ae6d4506f21771418aeee3ce92e9aeb5e8884357 ae6d4506f21771418aeee3ce92e9aeb5e8884357 Alon Dahari <climbinghobo@gmail.com> 1712606418 +0300	reset: moving to HEAD
+ae6d4506f21771418aeee3ce92e9aeb5e8884357 ae6d4506f21771418aeee3ce92e9aeb5e8884357 Alon Dahari <climbinghobo@gmail.com> 1712606422 +0300	reset: moving to HEAD
