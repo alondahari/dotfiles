@@ -14,9 +14,9 @@ return {
   },
   config = function()
     require("mason").setup()
-    local registry = require("mason-registry")
-    local lsp_config = require("mason-lspconfig")
-    lsp_config.setup()
+    require("mason-lspconfig").setup({
+      automatic_installation = true,
+    })
 
     local nvim_lsp = require("lspconfig")
 
@@ -72,19 +72,6 @@ return {
       -- nnoremap <silent> gS    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
       -- nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
       -- nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-    end
-
-    local ensured_installed_packages = {
-      "typescript-language-server",
-      "prettier",
-    }
-
-    for _, package in ipairs(ensured_installed_packages) do
-      local p = registry.get_package(package)
-
-      if not p:is_installed() then
-        p:install()
-      end
     end
 
     -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -170,11 +157,6 @@ return {
           },
         },
       },
-    })
-
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*",
-      command = "lua vim.lsp.buf.format()",
     })
   end,
 }
