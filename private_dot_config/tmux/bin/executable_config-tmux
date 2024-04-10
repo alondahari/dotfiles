@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_session ~/.config "configtmux" "configs" "zsh" "nvim" 0
+create_window_at ~/code/private/dotfiles/ "configtmux" "dotfiles" "zsh" "nvim"
+create_window_at ~/.ssh/ "configtmux" "ssh" "zsh" "nvim"
+create_window_at ~/.aws/ "configtmux" "aws" "zsh" "nvim"

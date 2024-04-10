@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 83b81f9abab89019dd24904d6c3717755bd19dbe Alon Dahari <alondahari@Alons-MBP-2.broadband> 1711195773 +0000	clone: from github.com:alondahari/dottmux.git
+83b81f9abab89019dd24904d6c3717755bd19dbe 2e0015fa9046bf1c56fa5b473a107a6305326cf8 Alon Dahari <alondahari@Alons-MBP-3.broadband> 1711270847 +0000	commit: Remove empty directories
+2e0015fa9046bf1c56fa5b473a107a6305326cf8 b8ba82d6dfab9dfec97de376b5cf9a1d399679af Alon Dahari <alondahari@Alons-MBP-3.broadband> 1711271510 +0000	commit: Fix window split
+b8ba82d6dfab9dfec97de376b5cf9a1d399679af f67692f53224448eac43ebc626a3aa1ca11a7231 Alon Dahari <climbinghobo@gmail.com> 1711357193 +0000	commit: Add plugins as submodules
+f67692f53224448eac43ebc626a3aa1ca11a7231 087fc0d53e9d2c57ee0d26c56044f1b509140495 Alon Dahari <climbinghobo@gmail.com> 1711990092 +0100	commit: Comment out lines that cause issues

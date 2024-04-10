@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_default_session ~/code/viva/fan-inc "faninc" 0
+create_window_at ~/code/viva/fan-inc/faninc-api "faninc" "api-code" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-api "faninc" "api-build" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-flutter "faninc" "fe-code" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-flutter "faninc" "fe-build" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-book "faninc" "book" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-terraform "faninc" "terraform" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-k8s "faninc" "k8s" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-lambdas "faninc" "lambdas" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-faktory-server "faninc" "faktory" "zsh"
+create_window_at ~/code/viva/fan-inc/ "faninc" "ngrok" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-api "faninc" "faktory-server" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-api "faninc" "faktory-workers" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-api/packages/faninc-api-shared "faninc" "faninc-api-shared" "zsh"
+
+attach_to_session "faninc"

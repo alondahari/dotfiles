@@ -1,0 +1,35 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_default_session ~/code/viva/fan-inc "faninc" 0
+create_window_at ~/code/viva/fan-inc/faninc-api "faninc" "api-code" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-api "faninc" "api-build" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-flutter "faninc" "fe-code" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-flutter "faninc" "fe-build" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-arena-api/ "faninc" "arena-code" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-arena-api/ "faninc" "arena-build" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-arena-flutter/ "faninc" "arena-fe-code" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-arena-flutter/ "faninc" "arena-fe-build" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-terraform "faninc" "terraform" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-book "faninc" "book" "zsh"
+create_window_at ~/code/viva/fan-inc "faninc" "db" "zsh" "nvim"
+create_window_at ~/code/viva/fan-inc/faninc-k8s "faninc" "k8s" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-lambdas "faninc" "lambdas" "zsh"
+create_window_at ~/code/viva/fan-inc/trading-card-uploader "faninc" "nft-uploader" "zsh" "nvim"
+create_window_at ~/code/viva/fan-inc/faninc-api/packages/faninc-api-shared "faninc" "api-shared" "zsh"
+create_window_at ~/code/viva/fan-inc/faninc-arena-api/packages/faninc-api-shared "faninc" "arena-shared" "zsh"
+create_window_at ~/code/viva/shared-terraform "faninc" "shared-terraform" "zsh" "nvim"
+
+nvim_with_terminal "faninc" "api-code" 20
+nvim_with_terminal "faninc" "arena-code" 20
+nvim_with_terminal "faninc" "fe-code" 20
+nvim_with_terminal "faninc" "arena-fe-code" 20
+ 
+four_way_split "faninc" "api-build"
+four_way_split "faninc" "fe-build"
+four_way_split "faninc" "arena-build"
+four_way_split "faninc" "arena-fe-build"
+
+select_window "faninc" "api-code"
+attach_to_session "faninc"

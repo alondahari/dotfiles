@@ -1,0 +1,12 @@
+[submodule "plugins/tpm"]
+	path = plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
+[submodule "plugins/tmux-sensible"]
+	path = plugins/tmux-sensible
+	url = git@github.com:tmux-plugins/tmux-sensible.git
+[submodule "plugins/tmux-sessionx"]
+	path = plugins/tmux-sessionx
+	url = git@github.com:omerxx/tmux-sessionx.git
+[submodule "plugins/tmux"]
+	path = plugins/tmux
+	url = git@github.com:catppuccin/tmux.git

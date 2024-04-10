@@ -1,0 +1,28 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = git@github.com:alondahari/dottmux.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[submodule "plugins/tpm"]
+	url = git@github.com:tmux-plugins/tpm.git
+	active = true
+[submodule "plugins/tmux-sensible"]
+	url = git@github.com:tmux-plugins/tmux-sensible.git
+	active = true
+[submodule "plugins/tmux-sessionx"]
+	url = git@github.com:omerxx/tmux-sessionx.git
+	active = true
+[submodule "plugins/catppuccin-tmux"]
+	url = git@github.com:catppuccin/tmux.git
+	active = true
+[submodule "plugins/tmux"]
+	url = git@github.com:catppuccin/tmux.git
+	active = true

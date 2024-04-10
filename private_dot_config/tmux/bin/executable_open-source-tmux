@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_default_session ~/code/open-source "open-source" 0
+create_window_at ~/code/open-source/gps "open-source" "gps" "zsh" "nvim"
+create_window_at ~/code/open-source/git-ps-book/ "open-source" "gps-book" "zsh" "nvim"
+create_window_at ~/code/open-source/shell-plugins/ "open-source" "op-shell-plugins" "zsh" "nvim"
+
+
+

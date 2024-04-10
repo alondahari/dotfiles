@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_default_session ~/code/private/vassi/ "vassi" 0
+create_window_at ~/code/private/vassi/native "vassi" "native" "zsh"
+create_window_at ~/code/private/vassi/api "vassi" "api" "zsh"
+
+nvim_with_terminal "vassi" "native" 20
+nvim_with_terminal "vassi" "api" 20

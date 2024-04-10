@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_default_session ~/code/shared/jumpstart "jumpstart" 0
+create_window_at ~/code/shared/jumpstart/jumpstart_nestjs_api "jumpstart" "nestjs_api" "zsh" "nvim"

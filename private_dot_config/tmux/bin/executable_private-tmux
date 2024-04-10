@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ~/.config/tmux/tmux-utils.sh
+
+create_default_session ~/code/private "private" 0
+create_window_at ~/code/private/blog/ "private" "blog" "zsh"
+create_window_at ~/code/private/advent-of-code-2023/ "private" "advent" "zsh"
+create_window_at ~/code/private/rust-by-example "private" "rbe" "zsh"
+create_window_at ~/code/private/rustlings "private" "rustlings" "zsh"
+create_window_at ~/code/private/fs "private" "fs" "zsh"
+
+nvim_with_terminal "private" "advent" 20
+nvim_with_terminal "private" "rbe" 20
+nvim_with_terminal "private" "rustlings" 20
