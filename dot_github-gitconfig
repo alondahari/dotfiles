@@ -1,0 +1,8 @@
+[user]
+	email = alondahari@github.com
+
+[gpg]
+	format = opengpg
+
+[core]
+  pager = less
