@@ -1,7 +1,7 @@
 [user]
 	name = Alon Dahari
 	email = climbinghobo@gmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKObnHIzX6+CFn27mgsZiON3rEGoJYCPM0VWpyuemS7
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB3Y3b9qKWgLduO4xUkSlpR5BiV6CGsCt4gjkTBKhAoE
   
 [includeIf "gitdir:/workspaces/github"]
   path = "./.github-gitconfig"
