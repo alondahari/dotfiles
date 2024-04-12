@@ -1,18 +1,47 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
+	"nvim-treesitter/nvim-treesitter",
 	dependencies = {
-		'nvim-treesitter/playground',
-		'nvim-treesitter/nvim-treesitter-context'
+		"nvim-treesitter/nvim-treesitter-context",
 	},
 	version = false,
-	build = ':TSUpdate',
+	build = ":TSUpdate",
 	config = function()
 		local configs = require("nvim-treesitter.configs")
 
 		configs.setup({
-			ensure_installed = { "lua", "luadoc", "vim", "vimdoc", "query", "ruby", "markdown", "markdown_inline", "rust", "toml", "sql", "yaml", "terraform", "typescript", "javascript", "jsdoc", "json", "bash", "css", "scss", "dart", "diff", "dockerfile", "git_rebase", "gitattributes", "gitignore", "graphql", "html" },
+			ensure_installed = {
+				"lua",
+				"luadoc",
+				"vim",
+				"vimdoc",
+				"query",
+				"ruby",
+				"markdown",
+				"markdown_inline",
+				"rust",
+				"toml",
+				"sql",
+				"yaml",
+				"terraform",
+				"typescript",
+				"tsx",
+				"javascript",
+				"jsdoc",
+				"json",
+				"bash",
+				"css",
+				"scss",
+				"dart",
+				"diff",
+				"dockerfile",
+				"git_rebase",
+				"gitattributes",
+				"gitignore",
+				"graphql",
+				"html",
+			},
 			highlight = { enable = true },
 			indent = { enable = true, disable = { "dart" } },
 		})
-	end
+	end,
 }
