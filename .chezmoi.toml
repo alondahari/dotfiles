@@ -1,2 +1,0 @@
-[data]
-  email = {{ if .personal }} climbinghobo@gmail.com {{ else }} alondahari@github.com {{ end }}
