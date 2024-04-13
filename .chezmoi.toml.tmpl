@@ -1,4 +1,5 @@
 [data]
+  email = {{ if .personal }} climbinghobo@gmail.com {{ else }} alondahari@github.com {{ end }}
   mac = {{ eq .chezmoi.os "darwin" }}
   linux = {{ eq .chezmoi.os "linux" }}
   personal = {{ eq .chezmoi.username "alondahari" }}

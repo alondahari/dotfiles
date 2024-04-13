@@ -1,10 +1,9 @@
 [user]
 	name = Alon Dahari
-	email = climbinghobo@gmail.com
+	email = {{ .email }}
+  {{ if .personal }}
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB3Y3b9qKWgLduO4xUkSlpR5BiV6CGsCt4gjkTBKhAoE
-  
-[includeIf "gitdir:/workspaces/github"]
-  path = "./.github-gitconfig"
+  {{ end }}
 
 [color]
     ui = auto
@@ -85,9 +84,11 @@
 [pull "submodule"]
 	recurse = true
 
+{{ if .personal }}
 [gpg]
 	format = ssh
 
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
   allowedSignersFile = ~/.ssh/allowed_signers
+{{ end }}
