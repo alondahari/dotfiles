@@ -130,6 +130,13 @@ alias tk="tmux kill-session"
 alias co="git co"
 alias su="git submodule update"
 
+{{ if .codespaces }}
+alias serv="/workspace/github/script/server"
+alias ...="cd /workspace/github"
+{{ else }}
+gh alias set new 'gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux'
+{{ end }}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
