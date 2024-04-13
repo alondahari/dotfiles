@@ -132,7 +132,7 @@ alias su="git submodule update"
 
 {{ if .codespaces }}
 alias serv="/workspace/github/script/server"
-alias ...="cd /workspace/github"
+alias ...="cd /workspaces/github"
 {{ else }}
 gh alias set new 'cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux'
 {{ end }}
