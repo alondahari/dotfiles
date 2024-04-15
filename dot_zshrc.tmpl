@@ -133,7 +133,7 @@ alias cz="chezmoi"
 alias cgit="chezmoi git"
 
 {{ if .codespaces }}
-alias serv="/workspace/github/script/server"
+alias serv="/workspaces/github/script/server"
 alias ...="cd /workspaces/github"
 {{ else }}
 gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\` -- -t 'zsh -l'"
