@@ -30,8 +30,6 @@ set-option -g focus-events on
 set -g default-terminal "screen-256color"
 set-option -ga terminal-overrides ',xterm-256color*:Tc'
 
-set -g default-command "$(which zsh)"
-
 # Add binding to reload tmux.conf for fast, iterative development
 bind-key r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"
 
