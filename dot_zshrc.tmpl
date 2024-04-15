@@ -139,8 +139,8 @@ alias cgit="chezmoi git"
 alias serv="/workspaces/github/script/server"
 alias ...="cd /workspaces/github"
 {{ else }}
-gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\` -- -t 'zsh -l'"
-gh alias set dev --clobber "cs ssh -- -t 'zsh -l'"
+gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\`"
+gh alias set dev --clobber "cs ssh"
 {{ end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
