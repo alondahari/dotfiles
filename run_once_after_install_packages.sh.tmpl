@@ -1,7 +1,31 @@
 #!/usr/bin/env bash
 
+function install_cli_app() {
+  if [ ! command -v $1 &> /dev/null ]; then
+    echo "Installing $1..."
+    eval $2
+  else
+    echo "$1 already installed"
+  fi
+}
+
+function install_app() {
+  if [ ! -d $2 ]; then
+    echo "Installing $1..."
+    eval $3
+  else
+    echo "$1 already installed"
+  fi
+}
+
 # install powerlevel10k theme for zsh
 if [ ! -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
+
+{{ if .mac }}
+install_cli_app "gps" 'brew tap "uptech/homebrew-oss" && brew install uptech/oss/git-ps-rs'
+{{ else }}
+install_cli_app "gps" 'cargo install gps'
+{{ end }}
 
