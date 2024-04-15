@@ -7,9 +7,9 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'catppuccin/tmux'
 set -g @plugin 'omerxx/tmux-sessionx'
 
-# Mac OS X fix for pbcopy, pbpaste, and launchctl
 {{- if .mac }}
-  set-option -g default-command "reattach-to-user-namespace -l $SHELL"
+# Mac OS X fix for pbcopy, pbpaste, and launchctl
+set-option -g default-command "reattach-to-user-namespace -l $SHELL"
 {{- end }}
 
 # Tell tmux to copy these environment variables over from the original shell
@@ -29,6 +29,8 @@ set-option -g focus-events on
 # color scheme will work properly inside of tmux.
 set -g default-terminal "screen-256color"
 set-option -ga terminal-overrides ',xterm-256color*:Tc'
+
+set -g default-command "$(which zsh)"
 
 # Add binding to reload tmux.conf for fast, iterative development
 bind-key r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"
