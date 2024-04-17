@@ -25,7 +25,7 @@ return {
 
 		-- Use a loop to conveniently call 'setup' on multiple servers and
 		-- map buffer local keybindings when the language server attaches
-		local servers = { "graphql", "ruby_ls", "gopls", "tsserver" }
+		local servers = { "graphql", "ruby_ls", "gopls", "tsserver", "rubocop", "sorbet" }
 		for _, lsp in ipairs(servers) do
 			nvim_lsp[lsp].setup({
 				on_attach = lsp_configs.on_attach,
@@ -38,7 +38,7 @@ return {
 			})
 		end
 
-		local rust_opts = {
+		require("rust-tools").setup({
 			tools = { -- rust-tools options
 				autoSetHints = true,
 				-- hover_with_actions = true,
@@ -65,11 +65,10 @@ return {
 					},
 				},
 			},
-		}
+		})
 
-		require("rust-tools").setup(rust_opts)
 		-- go lsp
-		require("lspconfig").lua_ls.setup({
+		nvim_lsp.lua_ls.setup({
 			settings = {
 				Lua = {
 					diagnostics = {
