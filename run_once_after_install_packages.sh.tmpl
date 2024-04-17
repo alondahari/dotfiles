@@ -25,9 +25,6 @@ fi
 
 {{ if .codespaces }}
   install_cli_app "gps" 'cargo install gps'
-
-  echo "Installing: bootstrapping neovim plugins ********************"
-  ~/.local/bin/nvim --headless "+Lazy! sync" +qa
 {{ else }}
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
@@ -53,6 +50,8 @@ fi
   install_app "raycast" "/Applications/Raycast.app" "brew install --cask raycast"
 
   install_cli_app "gps" 'brew tap "uptech/homebrew-oss" && brew install uptech/oss/git-ps-rs'
+
+  install_app "alt" "/Applications/Alt.app" "brew install uptech/oss/alt"
 
   install_cli_app "orb" "brew install orbstack"
 
