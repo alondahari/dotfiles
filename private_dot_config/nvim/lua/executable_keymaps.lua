@@ -66,6 +66,3 @@ vim.keymap.set("n", "tn", ":tabn<cr>")
 vim.keymap.set({ "v", "x", "n", "o" }, "\\", "<Plug>Commentary", { noremap = true })
 vim.keymap.set("n", "\\\\", "<Plug>CommentaryLine", { noremap = true })
 vim.keymap.set("n", "\\u", "<Plug>Commentary<Plug>Commentary", { noremap = true })
-
--- set cwd
-vim.keymap.set("n", "<space>cd", "<cmd>cd %:h<CR>")
