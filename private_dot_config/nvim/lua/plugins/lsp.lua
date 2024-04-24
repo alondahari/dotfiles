@@ -17,6 +17,7 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				"tsserver",
+				"eslint-lsp",
 			},
 		})
 
@@ -25,7 +26,7 @@ return {
 
 		-- Use a loop to conveniently call 'setup' on multiple servers and
 		-- map buffer local keybindings when the language server attaches
-		local servers = { "graphql", "ruby_ls", "gopls", "tsserver", "rubocop", "sorbet" }
+		local servers = { "graphql", "ruby_ls", "gopls", "tsserver", "rubocop", "sorbet", "eslint" }
 		for _, lsp in ipairs(servers) do
 			nvim_lsp[lsp].setup({
 				on_attach = lsp_configs.on_attach,
