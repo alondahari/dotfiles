@@ -26,6 +26,11 @@ fi
 {{ if .codespaces }}
   install_cli_app "gps" 'cargo install gps'
 {{ else }}
+
+  ## GH aliases
+  gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\`"
+  gh alias set dev --clobber "cs ssh"
+
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
   install_app "alacritty" "/Applications/Alacritty.App" "brew install --cask alacritty && brew tap homebrew/cask-fonts && brew install font-meslo-lg-nerd-font"
