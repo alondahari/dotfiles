@@ -1,0 +1,2 @@
+# This is picked up by codespaces
+export alias ta="tmux attach"
