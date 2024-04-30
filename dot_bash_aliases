@@ -1,3 +1,2 @@
 # This is picked up by codespaces
 alias ta="tmux attach"
-export $PATH=$PATH:~/.config/tmux/bin
