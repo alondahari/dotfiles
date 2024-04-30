@@ -26,7 +26,7 @@ fi
 {{ if .codespaces }}
   install_cli_app "gps" 'cargo install gps'
 
-  echo "export $PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
+  echo "export PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
 {{ else }}
 
   ## GH aliases
