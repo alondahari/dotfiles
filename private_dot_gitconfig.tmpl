@@ -8,6 +8,7 @@
 [color]
   ui = auto
 
+{{ if not .codespaces -}}
 [core]
   pager = delta
 
@@ -19,6 +20,7 @@
   light = false
   line-numbers = true
   side-by-side = true
+{{ end }}
 
 [alias]
   st = status
@@ -55,6 +57,7 @@
 
 [push]
   default = simple
+  autoSetupRemote = true
 
 [merge]
   conflictstyle = zdiff3
