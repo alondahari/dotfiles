@@ -1,6 +1,6 @@
 ---------- HELPERS ----------
 local opt = vim.opt -- to set options
-local g = vim.g     -- a table to access global variables
+local g = vim.g -- a table to access global variables
 local cmd = vim.cmd
 
 -- Leave eol of source files alone
@@ -11,10 +11,10 @@ opt.equalalways = false
 -- Color scheme
 -- --------------------------------------------
 opt.termguicolors = true
-opt.background = 'dark'
-cmd('colorscheme tokyonight-moon')
+opt.background = "dark"
+cmd("colorscheme tokyonight-moon")
 -- make line numbers more visible
-cmd('highlight LineNr guifg=Grey')
+cmd("highlight LineNr guifg=Grey")
 
 -- ----------------------------------------------
 -- Line Numbering
@@ -81,7 +81,7 @@ opt.signcolumn = "yes"
 -- menuone: popup even when there's only one match
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
-opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
+opt.completeopt = { "menuone", "noinsert", "noselect" }
 
 -- Don't pass messages to |ins-completion-menu|.
 -- set shortmess+=c
@@ -120,25 +120,13 @@ opt.softtabstop = 0
 -- 'shiftwidth' is only used for shifting text left or right.
 opt.smarttab = true
 
--- ----------------------------------------------
--- Markdown Support
--- ----------------------------------------------
-
--- disable header folding
-g.vim_markdown_folding_disabled = 1
-
--- do not use conceal feature, the implementation isn't good
-g.vim_markdown_conceal = 0
-
--- support front matter of various formats
-g.vim_markdown_frontmatter = 1      -- for YAML format
-g.vim_markdown_toml_frontmatter = 1 -- for TOML format
-g.vim_markdown_json_frontmatter = 1 -- for JSON format
-
 -- netrw
 -- Change the copy command. Mostly to enable recursive copy of directories.
-g.netrw_localcopydircmd = 'cp -r'
+g.netrw_localcopydircmd = "cp -r"
 
--- Hide the banner (if you want). To show it temporarily you can use `I` inside Netrw.
+-- Hide the banner. To show it temporarily you can use `I` inside Netrw.
 g.netrw_banner = 0
 g.netrw_altfile = 1
+
+-- https://github.com/preservim/vim-markdown?tab=readme-ov-file#syntax-concealing
+opt.conceallevel = 2
