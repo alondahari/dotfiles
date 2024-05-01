@@ -3,9 +3,9 @@
 source ~/.config/tmux/tmux-utils.sh
 
 create_session /workspaces/github "dotcom" "server" "zsh" "serv" 0
-create_window_at ~/.config "dotcom" "config" "zsh" "nvim"
-create_window_at /workspaces/github/ui/packages/ "dotcom" "code-ui" "zsh" "nvim"
+create_window_at ~/.config "dotcom" "config" "zsh"
+create_window_at /workspaces/github/ui/packages/ "dotcom" "code-ui" "zsh"
 create_window_at /workspaces/github/ui/packages/ "dotcom" "ui-tests" "zsh"
-create_window_at /workspaces/github "dotcom" "code-rb" "zsh" "nvim"
+create_window_at /workspaces/github "dotcom" "code-rb" "zsh"
 
 attach_to_session "dotcom"
