@@ -23,20 +23,19 @@ if [ ! -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
 
+## GH aliases
+gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\`"
+gh alias set dev --clobber "cs ssh"
+gh alias set tdnew --clobber 'issue -R alondahari/todo create --title "$1" --body ""'
+gh alias set dfnew --clobber 'issue -R alondahari/dotfiles-chez create --title "$1" --body ""'
+gh alias set dfls --clobber 'issue -R alondahari/dotfiles-chez list'
+gh alias set ports --shell 'gh codespace ports --codespace $CODESPACE_NAME'
+
 {{ if .codespaces }}
   install_cli_app "gps" 'cargo install gps'
 
   echo "export PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
 {{ else }}
-
-  ## GH aliases
-  gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\`"
-  gh alias set dev --clobber "cs ssh"
-  gh alias set tdnew --clobber 'issue -R alondahari/todo create --title "$1" --body ""'
-  gh alias set dfnew --clobber 'issue -R alondahari/dotfiles-chez create --title "$1" --body ""'
-  gh alias set dfls --clobber 'issue -R alondahari/dotfiles-chez list'
-  gh alias set ports --shell 'gh codespace ports --codespace $CODESPACE_NAME'
-
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
   install_app "alacritty" "/Applications/Alacritty.App" "brew install --cask alacritty && brew tap homebrew/cask-fonts && brew install font-meslo-lg-nerd-font"
