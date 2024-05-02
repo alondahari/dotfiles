@@ -34,6 +34,7 @@ fi
   gh alias set dev --clobber "cs ssh"
   gh alias set tdnew --clobber 'issue -R alondahari/todo create --title "$1" --body ""'
   gh alias set tdls --clobber 'issue -R alondahari/todo list'
+  gh alias set ports 'if [ -z "$CODESPACES" ]; then gh cs ports; else gh cs ports --codespace $CODESPACE_NAME; fi' -s
 
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
