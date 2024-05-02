@@ -33,7 +33,8 @@ fi
   gh alias set new --shell --clobber "gh cs ssh -c \`gh cs create -R github/github -b master --devcontainer-path .devcontainer/devcontainer.json -m xLargePremiumLinux --status\`"
   gh alias set dev --clobber "cs ssh"
   gh alias set tdnew --clobber 'issue -R alondahari/todo create --title "$1" --body ""'
-  gh alias set tdls --clobber 'issue -R alondahari/todo list'
+  gh alias set dfnew --clobber 'issue -R alondahari/dotfiles-chez create --title "$1" --body ""'
+  gh alias set dfls --clobber 'issue -R alondahari/dotfiles-chez list'
   gh alias set ports --shell 'gh codespace ports --codespace $CODESPACE_NAME'
 
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
