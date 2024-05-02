@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function install_cli_app() {
-  if [ ! command -v $1 &> /dev/null ]; then
+  if hash $1 2>/dev/null; then
     echo "Installing $1..."
     eval $2
   else
