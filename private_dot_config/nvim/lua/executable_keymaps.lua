@@ -66,3 +66,11 @@ vim.keymap.set("n", "tn", ":tabn<cr>")
 vim.keymap.set({ "v", "x", "n", "o" }, "\\", "<Plug>Commentary", { noremap = true })
 vim.keymap.set("n", "\\\\", "<Plug>CommentaryLine", { noremap = true })
 vim.keymap.set("n", "\\u", "<Plug>Commentary<Plug>Commentary", { noremap = true })
+
+--- DAP
+vim.keymap.set("n", "<leader>dc", "<cmd>lua require('dap').continue()<CR>")
+vim.keymap.set("n", "<leader>db", "<cmd>lua require('dap').toggle_breakpoint()<CR>")
+vim.keymap.set("n", "<leader>dr", "<cmd>lua require('dap').repl.toggle()<CR>")
+vim.keymap.set("n", "<leader>ds", "<cmd>lua require('dap').step_over()<CR>")
+vim.keymap.set("n", "<leader>di", "<cmd>lua require('dap').step_into()<CR>")
+vim.keymap.set("n", "<leader>du", "<cmd>lua require('dapui').toggle()<CR>")

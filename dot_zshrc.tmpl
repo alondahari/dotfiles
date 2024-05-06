@@ -133,7 +133,9 @@ alias cgit="chezmoi git"
 
 {{ if .codespaces }}
 alias serv="/workspaces/github/script/server"
+alias dserv="RUBY_DEBUG_PORT=38698 serv --debug --dap"
 alias ...="cd /workspaces/github"
+
 {{ end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
