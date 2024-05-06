@@ -29,7 +29,7 @@ gh alias set dev --clobber "cs ssh"
 gh alias set tdnew --clobber 'issue -R alondahari/todo create --title "$1" --body ""'
 gh alias set dfnew --clobber 'issue -R alondahari/dotfiles-chez create --title "$1" --body "$2"'
 gh alias set dfls --clobber 'issue -R alondahari/dotfiles-chez list'
-gh alias set dfd --clobber 'issue -R alondahari/dotfiles-chez delete $1'
+gh alias set dfd --clobber 'issue -R alondahari/dotfiles-chez close $1'
 gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_NAME'
 
 {{ if .codespaces }}
