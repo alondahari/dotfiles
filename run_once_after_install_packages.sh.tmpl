@@ -34,9 +34,9 @@ gh alias set dfs --clobber 'issue -R alondahari/dotfiles-chez view $1'
 gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_NAME'
 
 {{ if .codespaces }}
-  install_cli_app "gps" 'cargo install gps'
-  install_cli_app "alt" "cargo install alt"
-  install_cli_app "delta" "cargo install git-delta"
+  # install_cli_app "gps" 'cargo install gps'
+  # install_cli_app "alt" "cargo install alt"
+  # install_cli_app "delta" "cargo install git-delta"
 
   echo "export PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
   echo "export INSTALL_PATH=$(pwd)" >> ~/.bashrc
