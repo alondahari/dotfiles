@@ -6,7 +6,7 @@ return {
 		"nvim-telescope/telescope.nvim",
 	},
 	config = function()
-		local a = require("local-plugins/alt")
+		local a = require("alondahari/alt")
 
 		-- ----------------------------------------------
 		-- Telescope Selection of Alternates
