@@ -1,18 +1,8 @@
 return {
-	"plasticboy/vim-markdown",
-	lazy = true,
-	ft = "markdown",
+	"MeanderingProgrammer/markdown.nvim",
+	name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
+	dependencies = { "nvim-treesitter/nvim-treesitter" },
 	config = function()
-		-- ----------------------------------------------
-		-- Markdown Support
-		-- ----------------------------------------------
-
-		-- disable header folding
-		vim.g.vim_markdown_folding_disabled = 1
-
-		-- support front matter of various formats
-		vim.g.vim_markdown_frontmatter = 1 -- for YAML format
-		vim.g.vim_markdown_toml_frontmatter = 1 -- for TOML format
-		vim.g.vim_markdown_json_frontmatter = 1 -- for JSON format
+		require("render-markdown").setup({})
 	end,
 }
