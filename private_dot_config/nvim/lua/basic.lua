@@ -128,5 +128,8 @@ g.netrw_localcopydircmd = "cp -r"
 g.netrw_banner = 0
 g.netrw_altfile = 1
 
+-- Line numbers etc in Netrw
+g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
+
 -- https://github.com/preservim/vim-markdown?tab=readme-ov-file#syntax-concealing
 opt.conceallevel = 2
