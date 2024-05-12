@@ -1,5 +1,5 @@
 return {
-	dir = "local-plugins/alt",
+	dir = "alondahari/alt",
 	name = "alt",
 	dev = true,
 	dependencies = {
