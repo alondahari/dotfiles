@@ -29,7 +29,7 @@ return {
 
 		-- Use a loop to conveniently call 'setup' on multiple servers and
 		-- map buffer local keybindings when the language server attaches
-		local servers = { "ruby_ls", "tsserver", "rubocop", "sorbet", "eslint", "cssls" }
+		local servers = { "tsserver", "rubocop", "sorbet", "eslint", "cssls" }
 		for _, lsp in ipairs(servers) do
 			nvim_lsp[lsp].setup({
 				on_attach = lsp_configs.on_attach,
