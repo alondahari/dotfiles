@@ -35,6 +35,7 @@ gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_
 
 {{ if .codespaces }}
   cp ./lazy_install_codespaces.sh ~/.config/lazy_install.sh
+  chmod +x ~/.config/lazy_install.sh
 
   echo "export PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
   echo "export INSTALL_PATH=$(pwd)" >> ~/.bashrc
