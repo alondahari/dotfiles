@@ -9,23 +9,26 @@ function install_cli_app() {
   fi
 }
 
-{{ if .codespaces }}
+function install_brew() {
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/vscode/.zshrc
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+}
+
+
+# Commenting all this out for now, too much hassle
 # Avoid error with older versions of git, with zdiff3 not being found
-export HOMEBREW_FORCE_BREWED_GIT=1
-echo "Installing homebrew..."
-NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/vscode/.zshrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# export HOMEBREW_FORCE_BREWED_GIT=1
+# install_cli_app "brew" "install_brew"
+# install_cli_app "alt" "brew install uptech/oss/alt"
 
-sudo apt-get install build-essential
-
-install_cli_app "gps" 'brew tap "uptech/homebrew-oss" && brew install uptech/oss/git-ps-rs'
-install_cli_app "alt" "brew install uptech/oss/alt"
+install_cli_app "gps" "cargo install gps"
 install_cli_app "delta" "cargo install git-delta"
 
 echo "Installing: dependencies with apt ********************"
 sudo apt install -y ripgrep fd-find busybox universal-ctags
 
 echo "Building ctags"
-/workspace/github/bin/build-ctags
-{{ end }}
+/workspaces/github/bin/build-ctags
+
+
