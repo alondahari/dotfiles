@@ -1,8 +1,22 @@
-{{ if .codespaces }}
-  install_cli_app "gps" 'cargo install gps'
-  install_cli_app "alt" "cargo install alt"
-  install_cli_app "delta" "cargo install git-delta"
+#!/usr/bin/env bash
 
-  echo "Installing: dependencies with apt ********************"
-  udo apt update && sudo apt install -y ripgrep fd-find busybox universal-ctags
+function install_cli_app() {
+  if ! command -v $1 &> /dev/null; then
+    echo "Installing $1..."
+    eval $2
+  else
+    echo "$1 already installed"
+  fi
+}
+
+{{ if .codespaces }}
+echo "Installing homebrew..."
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+install_cli_app "gps" 'brew tap "uptech/homebrew-oss" && brew install uptech/oss/git-ps-rs'
+install_cli_app "alt" "brew install uptech/oss/alt"
+install_cli_app "delta" "cargo install git-delta"
+
+echo "Installing: dependencies with apt ********************"
+sudo apt update && sudo apt install -y ripgrep fd-find busybox universal-ctags
 {{ end }}
