@@ -1,0 +1,8 @@
+{{ if .codespaces }}
+  install_cli_app "gps" 'cargo install gps'
+  install_cli_app "alt" "cargo install alt"
+  install_cli_app "delta" "cargo install git-delta"
+
+  echo "Installing: dependencies with apt ********************"
+  udo apt update && sudo apt install -y ripgrep fd-find busybox universal-ctags
+{{ end }}

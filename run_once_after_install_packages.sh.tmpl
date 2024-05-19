@@ -34,9 +34,7 @@ gh alias set dfs --clobber 'issue -R alondahari/dotfiles view $1'
 gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_NAME'
 
 {{ if .codespaces }}
-  # install_cli_app "gps" 'cargo install gps'
-  # install_cli_app "alt" "cargo install alt"
-  # install_cli_app "delta" "cargo install git-delta"
+  cp ./lazy_install_codespaces.sh ~/.config/lazy_install.sh
 
   echo "export PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
   echo "export INSTALL_PATH=$(pwd)" >> ~/.bashrc
@@ -100,4 +98,3 @@ gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   fi
 {{ end }}
-
