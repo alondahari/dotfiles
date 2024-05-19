@@ -12,11 +12,15 @@ function install_cli_app() {
 {{ if .codespaces }}
 echo "Installing homebrew..."
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/vscode/.zshrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+sudo apt-get install build-essential
 
 install_cli_app "gps" 'brew tap "uptech/homebrew-oss" && brew install uptech/oss/git-ps-rs'
 install_cli_app "alt" "brew install uptech/oss/alt"
 install_cli_app "delta" "cargo install git-delta"
 
 echo "Installing: dependencies with apt ********************"
-sudo apt update && sudo apt install -y ripgrep fd-find busybox universal-ctags
+sudo apt install -y ripgrep fd-find busybox universal-ctags
 {{ end }}
