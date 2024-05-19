@@ -10,6 +10,8 @@ function install_cli_app() {
 }
 
 {{ if .codespaces }}
+# Avoid error with older versions of git, with zdiff3 not being found
+export HOMEBREW_FORCE_BREWED_GIT=1
 echo "Installing homebrew..."
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/vscode/.zshrc
@@ -23,4 +25,7 @@ install_cli_app "delta" "cargo install git-delta"
 
 echo "Installing: dependencies with apt ********************"
 sudo apt install -y ripgrep fd-find busybox universal-ctags
+
+echo "Building ctags"
+/workspace/github/bin/build-ctags
 {{ end }}
