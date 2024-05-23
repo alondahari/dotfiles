@@ -74,3 +74,6 @@ vim.keymap.set("n", "<leader>dr", "<cmd>lua require('dap').repl.toggle()<CR>")
 vim.keymap.set("n", "<leader>ds", "<cmd>lua require('dap').step_over()<CR>")
 vim.keymap.set("n", "<leader>di", "<cmd>lua require('dap').step_into()<CR>")
 vim.keymap.set("n", "<leader>du", "<cmd>lua require('dapui').toggle()<CR>")
+
+-- manual Neoformat
+vim.keymap.set("n", "<space>f", "<cmd>Neoformat<CR>")
