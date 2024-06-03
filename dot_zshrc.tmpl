@@ -141,6 +141,10 @@ alias ...="cd /workspaces/github"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# prevent alacritty from bouncing in the dock
+# https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
+printf "\e[?1042l"
+
 ## [Dart Completion] 
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f ~/.dart-cli-completion/zsh-config.zsh ]] && . ~/.dart-cli-completion/zsh-config.zsh || true
