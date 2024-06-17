@@ -1,5 +1,5 @@
 name: form
-description: my form
+about: my form
 body:
   - type: input
     description: this is an input
