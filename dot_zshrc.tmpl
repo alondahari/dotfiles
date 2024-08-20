@@ -19,6 +19,9 @@ export PATH=$GEM_HOME/bin:$PATH
 {{ end }}
 export PATH=$PATH:~/.cargo/bin/
 
+# ignore sorbet bundler mismatch errors
+export SRB_SKIP_GEM_RBIS=true
+
 eval "$(rbenv init - zsh)"
 
 {{ if .mac }}
