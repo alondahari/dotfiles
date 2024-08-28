@@ -2,7 +2,7 @@
 
 source ~/.config/tmux/tmux-utils.sh
 
-create_session /workspaces/github "dotcom" "server" "zsh" 0
+create_session /workspaces/github "dotcom" "server" "zsh" 0 1
 create_window_at ~/.config "dotcom" "config" "zsh" "./lazy_install.sh"
 create_window_at /workspaces/github/ui/packages/ "dotcom" "code-ui" "zsh"
 create_window_at /workspaces/github/ui/packages/ "dotcom" "term-ui" "zsh"
