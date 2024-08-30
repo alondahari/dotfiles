@@ -8,5 +8,3 @@ create_window_at /workspaces/github/ui/packages/ "dotcom" "code-ui" "zsh"
 create_window_at /workspaces/github/ui/packages/ "dotcom" "term-ui" "zsh"
 create_window_at /workspaces/github "dotcom" "code-rb" "zsh"
 create_window_at /workspaces/github "dotcom" "term-rb" "zsh"
-
-attach_to_session "dotcom"
