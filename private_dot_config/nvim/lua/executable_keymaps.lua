@@ -77,3 +77,7 @@ vim.keymap.set("n", "<leader>du", "<cmd>lua require('dapui').toggle()<CR>")
 
 -- manual Neoformat
 vim.keymap.set("n", "<space>f", "<cmd>Neoformat<CR>")
+
+-- copy github link of current line
+vim.keymap.set("v", "<space>l", ":'<,'>GBrowse!<CR>")
+
