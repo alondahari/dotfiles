@@ -38,6 +38,11 @@ gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_
   chmod +x ~/.config/lazy_install.sh
 
   echo "export PATH=$PATH:~/.config/tmux/bin" >> ~/.bashrc
+
+  install_cli_app "tmux" "sudo apt install tmux"
+
+  install_cli_app "nvim" "sudo apt install neovim"
+
   echo "export INSTALL_PATH=$(pwd)" >> ~/.bashrc
 {{ else }}
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
