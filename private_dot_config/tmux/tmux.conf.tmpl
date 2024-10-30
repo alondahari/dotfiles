@@ -105,7 +105,8 @@ bind -T copy-mode-vi j send -X halfpage-up
 bind -T copy-mode-vi h send -X halfpage-down
 
 # easier window management
-bind-key -T prefix w new-window
+bind-key w command-prompt -p "window name:" "new-window; rename-window '%%'"
+bind-key -T prefix x kill-window
 
 set -g @catppuccin_window_left_separator ""
 set -g @catppuccin_window_right_separator " "
