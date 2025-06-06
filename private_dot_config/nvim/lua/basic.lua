@@ -133,3 +133,12 @@ g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
 
 -- https://github.com/preservim/vim-markdown?tab=readme-ov-file#syntax-concealing
 opt.conceallevel = 2
+
+vim.keymap.set("n", "<leader>n", function()
+	local old_name = vim.fn.expand("%")
+	local new_name = vim.fn.input("New file name: ", vim.fn.expand("%"), "file")
+	if new_name ~= '' and new_name ~= old_name then
+		vim.cmd('saveas ' .. new_name)
+		vim.cmd('silent !rm ' .. old_name)
+	end
+end)
