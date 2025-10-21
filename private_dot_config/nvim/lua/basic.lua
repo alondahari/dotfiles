@@ -134,6 +134,14 @@ g.netrw_bufsettings = "noma nomod nu nobl nowrap ro"
 -- https://github.com/preservim/vim-markdown?tab=readme-ov-file#syntax-concealing
 opt.conceallevel = 2
 
+-- --------------------------------------------
+-- Folding Configuration (nvim-ufo)
+-- --------------------------------------------
+opt.foldcolumn = "1" -- Show fold column
+opt.foldlevel = 99 -- Using ufo provider need a large value
+opt.foldlevelstart = 99 -- Start with all folds open
+opt.foldenable = true -- Enable folding
+
 vim.keymap.set("n", "<leader>n", function()
 	local old_name = vim.fn.expand("%")
 	local new_name = vim.fn.input("New file name: ", vim.fn.expand("%"), "file")

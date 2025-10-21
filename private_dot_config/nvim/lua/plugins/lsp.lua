@@ -28,6 +28,13 @@ return {
 		local nvim_lsp = require("lspconfig")
 		local lsp_configs = require("alondahari/lsp")
 
+		-- Setup capabilities with folding range support for nvim-ufo
+		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+		capabilities.textDocument.foldingRange = {
+			dynamicRegistration = false,
+			lineFoldingOnly = true,
+		}
+
 		-- Use a loop to conveniently call 'setup' on multiple servers and
 		-- map buffer local keybindings when the language server attaches
 		local servers = { "tsserver", "rubocop", "sorbet", "eslint", "cssls", "gopls" }
@@ -37,9 +44,7 @@ return {
 				flags = {
 					debounce_text_changes = 150,
 				},
-				capabilities = require("cmp_nvim_lsp").default_capabilities(
-					vim.lsp.protocol.make_client_capabilities()
-				),
+				capabilities = capabilities,
 			})
 		end
 
@@ -59,6 +64,7 @@ return {
 			server = {
 				-- on_attach is a callback called when the language server attachs to the buffer
 				on_attach = lsp_configs.on_attach,
+				capabilities = capabilities,
 				settings = {
 					-- to enable rust-analyzer settings visit:
 					-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -74,6 +80,7 @@ return {
 
 		-- go lsp
 		nvim_lsp.lua_ls.setup({
+			capabilities = capabilities,
 			settings = {
 				Lua = {
 					diagnostics = {
@@ -89,6 +96,7 @@ return {
 		-- ===========================================
 		nvim_lsp.ltex.setup({
 			on_attach = lsp_configs.on_attach,
+			capabilities = capabilities,
 			settings = {
 				ltex = {
 					language = "en-GB",
