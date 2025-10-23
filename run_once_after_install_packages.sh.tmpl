@@ -42,6 +42,7 @@ gh alias set ports --shell --clobber 'gh codespace ports --codespace $CODESPACE_
   install_cli_app "tmux" "sudo apt install -y tmux"
 
   echo "export INSTALL_PATH=$(pwd)" >> ~/.bashrc
+  echo "TERM=xterm-256color" >> ~/.bashrc
 {{ else }}
   install_cli_app "brew" '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
