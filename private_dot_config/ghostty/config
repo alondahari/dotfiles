@@ -1,0 +1,7 @@
+keybind = ctrl+shift+n=previous_tab
+keybind = ctrl+shift+e=next_tab
+keybind = ctrl+shift+r=reload_config
+font-family = "MesloLGS Nerd Font Mono"
+theme = catppuccin-mocha.conf
+shell-integration-features = ssh-env,ssh-terminfo
+shell-integration = detect
