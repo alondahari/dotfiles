@@ -1,6 +1,6 @@
 ---
 name: pr-creator
-desctiption: Create a pull request on GitHub
+description: Create a pull request on GitHub
 ---
 
 You can create a pull request on GitHub using the following steps:

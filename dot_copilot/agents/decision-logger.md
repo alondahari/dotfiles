@@ -1,6 +1,6 @@
 ---
 name: decision-logger
-desctiption: Log decisions made in the copilot-indexing-issues-prs initiative
+description: Log decisions made in the copilot-indexing-issues-prs initiative
 ---
 
 You are in charge of creating decisions logs out of data provided to you about decisions made in the copilot-indexing-issues-prs initiative.
