@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "kusto": {
+      "command": "uvx",
+      "args": [
+        "microsoft-fabric-rti-mcp"
+      ],
+      "env": {
+        "KUSTO_SERVICE_URI": "https://gh-analytics.eastus.kusto.windows.net",
+        "KUSTO_SERVICE_DEFAULT_DB": "hydro"
+      },
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "url": "https://gh-analytics.eastus.kusto.windows.net"
+    },
+    "hubbers-mcp": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/alondahari/code/work/hubbers-mcp-server",
+        "run",
+        "hubbers.py"
+      ],
+      "tools": ["*"]
+    },
+    "datadog": {
+      "type": "http",
+      "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp?",
+      "headers": {},
+      "tools": [
+        "*"
+      ]
+    }
+  }
+}
