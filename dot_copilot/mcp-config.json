@@ -32,6 +32,36 @@
       "tools": [
         "*"
       ]
+    },
+    "splunk": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "SPLUNK_HOST",
+        "-e",
+        "SPLUNK_PORT",
+        "-e",
+        "SPLUNK_BEARER_TOKEN",
+        "-e",
+        "SPLUNK_SCHEME",
+        "-e",
+        "VERIFY_SSL",
+        "-e",
+        "FASTMCP_LOG_LEVEL",
+        "hashtagchris/splunk-mcp:bearer-token-auth"
+      ],
+      "env": {
+        "SPLUNK_HOST": "splunkazure-api.service.azure-eastus.github.net",
+        "SPLUNK_PORT": "443",
+        "SPLUNK_BEARER_TOKEN": "${SPLUNK_BEARER_TOKEN}",
+        "SPLUNK_SCHEME": "https",
+        "VERIFY_SSL": "true",
+        "FASTMCP_LOG_LEVEL": "DEBUG"
+      },
+      "tools": ["*"]
     }
   }
 }
