@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "notes": "alondahari's keyboard",
+  "documentation": "\"This file is a QMK Configurator export. You can import this at <https://config.qmk.fm>. It can also be used directly with QMK's source code.\n\nTo setup your QMK environment check out the tutorial: <https://docs.qmk.fm/#/newbs>\n\nYou can convert this file to a keymap.c using this command: `qmk json2c {keymap}`\n\nYou can compile this keymap using this command: `qmk compile {keymap}`\"\n",
+  "keyboard": "handwired/dactyl_manuform/4x5",
+  "keymap": "handwired_dactyl_manuform_4x5_alternate-experiment",
+  "layout": "LAYOUT",
+  "layers": [
+    [
+        "LGUI_T(KC_Q)", "KC_W", "KC_E", "KC_R", "KC_T",                          "KC_Y", "KC_U", "KC_I", "KC_O", "KC_P",
+        "KC_A", "KC_S", "LT(4,KC_D)", "LT(1,KC_F)", "KC_G",                      "KC_H", "KC_J", "KC_K", "KC_L", "KC_SCLN",
+        "KC_Z", "KC_X", "LT(4,KC_C)", "KC_V", "KC_B",                            "KC_N", "LT(2,KC_M)", "LT(3,KC_COMM)", "LT(6,KC_DOT)", "KC_QUOT",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
+        "LSFT_T(KC_ESC)", "LCTL_T(KC_BSPC)",                                     "RGUI_T(KC_SPC)", "LSFT_T(KC_ENT)",
+        "KC_NO", "AP_FN",                                                        "KC_NO", "KC_NO",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "DF(7)"
+    ],
+    [
+        "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",                   "KC_VOLU", "KC_TAB", "KC_UP", "LSFT(KC_TAB)", "KC_PGUP",
+        "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",                   "KC_MUTE", "KC_LEFT", "KC_DOWN", "KC_RGHT", "KC_PGDN",
+        "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",                   "KC_VOLD", "LSFT(KC_P)", "KC_P", "KC_MINS", "KC_EQL",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_NO", "KC_NO",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS"
+    ],
+    [
+        "KC_NO", "KC_1", "KC_2", "KC_3", "KC_UP",                                "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
+        "KC_0", "KC_4", "KC_5", "KC_6", "KC_DOWN",                               "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
+        "KC_NO", "KC_7", "KC_8", "KC_9", "OSM(MOD_LALT)",                        "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS"
+    ],
+    [
+        "KC_NO", "KC_NO", "KC_LCBR", "KC_RCBR", "KC_NO",                         "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
+        "KC_LT", "KC_GT", "KC_LPRN", "KC_RPRN", "KC_NO",                         "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
+        "KC_BSLS", "KC_QUOT", "KC_LBRC", "KC_RBRC", "KC_NO",                     "KC_NO", "LGUI(KC_SPC)", "KC_NO", "KC_NO", "KC_NO",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO"
+    ],
+    [
+        "KC_NO", "KC_NO", "KC_NO", "KC_BRID", "KC_BRIU",                         "KC_GRV", "KC_TILD", "KC_EXLM", "KC_QUES", "KC_NO",
+        "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",                             "KC_UNDS", "KC_PERC", "KC_CIRC", "KC_DLR", "KC_HASH",
+        "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",                             "KC_PLUS", "KC_PIPE", "KC_AMPR", "KC_AT", "KC_ASTR",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_NO", "KC_NO",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO"
+    ],
+    [
+        "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",                   "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",                   "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",                   "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+        "KC_NO", "KC_TRNS",                                                      "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS"
+    ],
+    [
+        "RAG(KC_Q)", "RAG(KC_W)", "RAG(KC_E)", "RAG(KC_R)", "RAG(KC_T)",         "RAG(KC_Y)", "RAG(KC_U)", "RAG(KC_I)", "RAG(KC_O)", "RAG(KC_P)",
+        "RAG(KC_A)", "RAG(KC_S)", "RAG(KC_D)", "RAG(KC_F)", "RAG(KC_G)",         "RAG(KC_H)", "RAG(KC_J)", "LGUI(KC_K)", "KC_NO", "RAG(KC_L)",
+        "RAG(KC_Z)", "RAG(KC_X)", "RAG(KC_C)", "RAG(KC_V)", "RAG(KC_B)",         "RAG(KC_N)", "RAG(KC_M)", "RAG(KC_COMM)", "RAG(KC_DOT)", "RAG(KC_QUOT)",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_NO", "KC_NO",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO"
+    ],
+    [
+        "KC_Q", "KC_W", "KC_E", "KC_R", "KC_T",                                  "KC_Y", "KC_U", "KC_I", "KC_O", "KC_P",
+        "KC_A", "KC_S", "KC_D", "KC_F", "KC_G",                                  "KC_H", "KC_J", "KC_K", "KC_L", "KC_P",
+        "KC_Z", "KC_X", "LT(4,KC_C)", "LT(1,KC_V)", "KC_B",                      "KC_N", "LT(2,KC_M)", "LT(3,KC_COMM)", "LT(6,KC_DOT)", "KC_QUOT",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
+        "KC_TRNS", "KC_TRNS",                                                    "KC_NO", "KC_NO",
+        "KC_NO", "KC_NO",                                                        "KC_NO", "DF(0)"
+    ]
+  ],
+  "author": "alondahari"
+}
