@@ -62,7 +62,7 @@
     ],
     [
         "RAG(KC_Q)", "RAG(KC_W)", "RAG(KC_E)", "RAG(KC_R)", "RAG(KC_T)",         "RAG(KC_Y)", "RAG(KC_U)", "RAG(KC_I)", "RAG(KC_O)", "RAG(KC_P)",
-        "RAG(KC_A)", "RAG(KC_S)", "RAG(KC_D)", "RAG(KC_F)", "RAG(KC_G)",         "RAG(KC_H)", "RAG(KC_J)", "LGUI(KC_K)", "KC_NO", "RAG(KC_L)",
+        "RAG(KC_A)", "RAG(KC_S)", "RAG(KC_D)", "RAG(KC_F)", "RAG(KC_G)",         "RAG(KC_H)", "RAG(KC_J)", "RAG(KC_K)", "KC_NO", "RAG(KC_L)",
         "RAG(KC_Z)", "RAG(KC_X)", "RAG(KC_C)", "RAG(KC_V)", "RAG(KC_B)",         "RAG(KC_N)", "RAG(KC_M)", "RAG(KC_COMM)", "RAG(KC_DOT)", "RAG(KC_QUOT)",
         "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
         "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
