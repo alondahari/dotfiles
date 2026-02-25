@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "notes": "alondahari's keyboard",
+  "notes": "My awesome keymap",
   "documentation": "\"This file is a QMK Configurator export. You can import this at <https://config.qmk.fm>. It can also be used directly with QMK's source code.\n\nTo setup your QMK environment check out the tutorial: <https://docs.qmk.fm/#/newbs>\n\nYou can convert this file to a keymap.c using this command: `qmk json2c {keymap}`\n\nYou can compile this keymap using this command: `qmk compile {keymap}`\"\n",
   "keyboard": "handwired/dactyl_manuform/4x5",
   "keymap": "handwired_dactyl_manuform_4x5_alternate-experiment",
@@ -36,7 +36,7 @@
     [
         "KC_NO", "KC_NO", "KC_LCBR", "KC_RCBR", "KC_NO",                         "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
         "KC_LT", "KC_GT", "KC_LPRN", "KC_RPRN", "KC_NO",                         "KC_NO", "KC_NO", "KC_NO", "KC_NO", "KC_NO",
-        "KC_BSLS", "KC_QUOT", "KC_LBRC", "KC_RBRC", "KC_NO",                     "KC_NO", "LGUI(KC_SPC)", "KC_NO", "KC_NO", "KC_NO",
+        "KC_BSLS", "KC_SLSH", "KC_LBRC", "KC_RBRC", "KC_NO",                     "KC_NO", "LGUI(KC_SPC)", "KC_NO", "KC_NO", "KC_NO",
         "KC_NO", "KC_NO",                                                        "KC_NO", "KC_NO",
         "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
         "KC_TRNS", "KC_TRNS",                                                    "KC_TRNS", "KC_TRNS",
@@ -79,5 +79,5 @@
         "KC_NO", "KC_NO",                                                        "KC_NO", "DF(0)"
     ]
   ],
-  "author": "alondahari"
+  "author": "Anonymous"
 }
