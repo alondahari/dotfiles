@@ -1,0 +1,3 @@
+{{- if .codespaces }}
+.copilot/agents/**
+{{- end }}
