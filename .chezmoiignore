@@ -1,3 +1,4 @@
 {{- if .codespaces }}
 .copilot/agents/**
+.copilot/mcp-config.json
 {{- end }}
