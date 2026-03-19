@@ -157,5 +157,7 @@ printf "\e[?1042l"
 # QMK AVR toolchain
 export PATH="/opt/homebrew/opt/avr-gcc@8/bin:$PATH"
 
+{{- if not .codespaces }}
 # Splunk bearer token (fetched from 1Password)
 export SPLUNK_BEARER_TOKEN="{{ onepasswordRead "op://Individual/Splunk Token/credential" }}"
+{{- end }}
