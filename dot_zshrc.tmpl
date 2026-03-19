@@ -135,6 +135,7 @@ alias cz="chezmoi"
 alias cgit="chezmoi git"
 
 {{ if .codespaces }}
+export PATH=$PATH:$HOME/.config/tmux/bin
 alias serv="/workspaces/github/script/server"
 alias dserv="RUBY_DEBUG_PORT=38698 serv --debug --dap"
 alias ...="cd /workspaces/github"
