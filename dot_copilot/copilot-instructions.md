@@ -14,6 +14,17 @@ Do NOT automatically commit or push changes unless explicitly asked to in the cu
 
 CI environments run tests with all feature flags enabled. When making changes and running tests, account for this by toggling any relevant flags on or off. To run tests with all flags enabled locally, pass `TEST_ALL_FEATURES=1`.
 
+## Local API Testing in Codespaces
+
+To test the GitHub API locally in a Codespace, find the monalisa dev token by running:
+```bash
+grep 'GITHUB_TOKEN=' script/start-workbench
+```
+Then use it to curl:
+```bash
+curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
+```
+
 ## System Configuration
 
 Dotfiles and system configurations are managed with [chezmoi](https://www.chezmoi.io/). When adding or modifying shell config (e.g. `~/.zshrc`), PATH entries, environment variables, or other system-level dotfiles, always apply changes through chezmoi source files rather than editing targets directly. The chezmoi source directory is `~/.local/share/chezmoi/`.
