@@ -8,7 +8,11 @@
 
 ## Git Operations
 
-Do NOT automatically commit or push changes unless explicitly asked to in the current message. Previous requests to commit or push do not imply future ones — always wait for an explicit instruction each time.
+**NEVER run `git push` or `git commit` without explicit instruction in the current user message.** This is a critical rule — violating it is the single most disruptive thing you can do.
+
+- "Commit and open a PR" → commit, push, and open a PR (this is one explicit instruction)
+- After that, if you make more changes (e.g., addressing review feedback, fixing a bug), **do NOT commit or push automatically** — stop and tell the user what you changed, then wait for them to say "commit", "push", or similar
+- Previous requests to commit/push do NOT carry over to future messages — each push needs its own explicit instruction
 
 ## Testing with Feature Flags
 
