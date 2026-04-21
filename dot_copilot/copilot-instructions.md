@@ -52,6 +52,7 @@ GitHub logs use **OpenTelemetry** format. Key fields (access via `| spath`):
 
 - `rails` — Rails application logs (web requests, controllers)
 - `prod-resque` — Background job logs (Resque/ActiveJob workers)
+- rails-exceptions -- Dedicated index for Rails exceptions
 
 ### Query tips
 
