@@ -160,6 +160,6 @@ printf "\e[?1042l"
 export PATH="/opt/homebrew/opt/avr-gcc@8/bin:$PATH"
 
 {{- if not .codespaces }}
-# Splunk bearer token (fetched from 1Password)
-export SPLUNK_BEARER_TOKEN="{{ onepasswordRead "op://Individual/Splunk Token/credential" }}"
+# Splunk bearer token (fetched dynamically from 1Password)
+export SPLUNK_BEARER_TOKEN="$(op read 'op://Individual/Splunk Token/credential')"
 {{- end }}
