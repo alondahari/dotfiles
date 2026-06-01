@@ -71,21 +71,40 @@ const HTML = `<!DOCTYPE html>
   th, td { border: 1px solid #d1d9e0; padding: 6px 13px; }
   tr:nth-child(2n) { background: #f6f8fa; }
   img { max-width: 100%; }
+  .mermaid { background: #fff; text-align: center; }
 </style>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+  window.renderMermaid = async function() {
+    document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+      const pre = block.parentElement;
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = block.textContent;
+      pre.replaceWith(div);
+    });
+    await mermaid.run({ querySelector: '.mermaid' });
+  };
+</script>
 <script>
+  var lastRaw = '';
   setInterval(function() {
     fetch(window.location.href + '?raw=1')
       .then(r => r.text())
-      .then(html => {
+      .then(function(html) {
+        if (html === lastRaw) return;
+        lastRaw = html;
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
         var newContent = doc.querySelector('#content').innerHTML;
-        var oldContent = document.querySelector('#content').innerHTML;
-        if (newContent !== oldContent) {
-          document.querySelector('#content').innerHTML = newContent;
-        }
+        document.querySelector('#content').innerHTML = newContent;
+        if (window.renderMermaid) window.renderMermaid();
       });
   }, 1000);
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.renderMermaid) window.renderMermaid();
+  });
 </script>
 </head>
 <body>
