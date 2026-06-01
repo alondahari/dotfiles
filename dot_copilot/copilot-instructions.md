@@ -33,6 +33,25 @@ curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
 
 Dotfiles and system configurations are managed with [chezmoi](https://www.chezmoi.io/). When adding or modifying shell config (e.g. `~/.zshrc`), PATH entries, environment variables, or other system-level dotfiles, always apply changes through chezmoi source files rather than editing targets directly. The chezmoi source directory is `~/.local/share/chezmoi/`.
 
+## Investigating Issues — Feature Flag Correlation
+
+When investigating a production issue and you suspect a feature flag state might be involved, **always check feature flag changes first** before diving deeper. Use the Datadog MCP to search events:
+
+- Query: `tags:feature_flag` with a time window of 30 minutes before/after the incident
+- For extended searches (flags enabled days/weeks ago): search up to 30 days back
+- Narrow by keyword: `tags:feature_flag *<keyword>*`
+- Narrow by team: `tags:feature_flag owning_service:github/<team>`
+
+### Critical rules
+
+- `feature_flag` is a **standalone tag** (no value) — never use `sources:feature_flag` or `tags:feature_flag:<name>`
+- Parse event messages carefully:
+  - "enabled for X%" / "fully shipped" / "actor added" → flag was **ENABLED** (possible cause)
+  - "actor removed" / "fully disabled" / "deleted" → flag was **DISABLED** (NOT a cause of new behavior)
+- If the affected feature area doesn't match a flag name directly, trace the code path in `github/github` to find the controlling flag
+
+Reference: [github/copilot-sre feature-flags workflow](https://github.com/github/copilot-sre/blob/main/.github/skills/datadog/workflows/feature-flags.md)
+
 ## Splunk MCP Usage
 
 The Splunk MCP server connects to GitHub's internal Splunk instance (`splunkazure-api.service.azure-eastus.github.net`). It runs in a Docker container with `--network host` (required for internal DNS resolution).
