@@ -1,11 +1,22 @@
+---
+name: codespace-test-runner
+description: >
+  Run github/github tests remotely in a GitHub Codespace. Use when the local
+  environment cannot run Rails tests (macOS worktree sessions, missing deps) or
+  when the user explicitly asks to run tests remotely. Supports running tests
+  against pushed branches OR uncommitted local changes (via file copy).
+  Triggers: run tests in codespace, remote tests, codespace test, test remotely.
+---
+
 # Codespace Test Runner
 
 Run github/github tests in a GitHub Codespace when the local environment cannot execute them (e.g., local macOS sessions, missing dependencies, or when the user explicitly requests remote execution).
 
 ## Prerequisites
 
-- `gh` CLI authenticated with access to `github/github`
-- The branch you want to test must be pushed to the remote
+- `gh` CLI authenticated with `codespace` scope (`gh auth refresh -h github.com -s codespace`)
+- For branch-based testing: the branch must be pushed to the remote
+- For local-changes testing: an existing Codespace (any branch) is sufficient
 
 ## Step 1: Find or Create a Codespace
 
@@ -89,6 +100,33 @@ gh codespace delete -c <CODESPACE_NAME>
 ```
 
 ## Common Patterns
+
+### Test uncommitted changes WITHOUT pushing (preferred for draft PRs)
+
+This avoids polluting your PR with "wip" commits. Use an existing Codespace on any branch:
+
+```bash
+# 1. Find or create a Codespace (can be on master — we'll copy files over)
+CODESPACE=$(gh codespace list --repo github/github --json name,state -q '.[0].name')
+# Or create one: gh codespace create --repo github/github --branch master --machine xLargePremiumLinux
+
+# 2. Copy modified files into the Codespace
+gh codespace cp app/api/issues.rb remote:/workspaces/github/app/api/issues.rb -c "$CODESPACE"
+gh codespace cp test/integration/api/issues_test.rb remote:/workspaces/github/test/integration/api/issues_test.rb -c "$CODESPACE"
+
+# 3. Run tests (the copied files override what's on disk)
+gh codespace exec -c "$CODESPACE" -- env TEST_ALL_FEATURES=1 bin/rails test test/integration/api/issues_test.rb
+
+# 4. (Optional) Reset the codespace back to clean state
+gh codespace exec -c "$CODESPACE" -- git checkout -- .
+```
+
+**Tip:** To copy all modified files at once:
+```bash
+git diff --name-only | while read f; do
+  gh codespace cp "$f" "remote:/workspaces/github/$f" -c "$CODESPACE"
+done
+```
 
 ### Push branch and run tests remotely
 
