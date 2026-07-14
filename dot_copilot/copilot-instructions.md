@@ -33,6 +33,23 @@ curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
 
 Dotfiles and system configurations are managed with [chezmoi](https://www.chezmoi.io/). When adding or modifying shell config (e.g. `~/.zshrc`), PATH entries, environment variables, or other system-level dotfiles, always apply changes through chezmoi source files rather than editing targets directly. The chezmoi source directory is `~/.local/share/chezmoi/`.
 
+## Daily Work Project Tracking
+
+The private GitHub user project `alondahari/2` ("Daily work") tracks issues across repositories.
+
+When the user instructs a local agent to work on a specific issue:
+
+- At the start of the interaction, add that work-target issue to this board if it is not already present. Issues from any GitHub repository are eligible.
+- At the start of active work, update `Session ID` with the current app project-session ID when available, set `Session state` to `In progress`, and set `Status` to `Session in progress` unless the issue already has a higher-precedence PR or CI status.
+- Before yielding to the user, waiting for input, or finishing work, set `Session state` to `Idle` and set `Status` to `Session idle` unless PR or CI state has higher precedence.
+- Update `Last synced` whenever changing these fields.
+- Do not add issues that are merely mentioned, referenced for context, discovered during investigation, or linked from the work-target issue.
+- Never infer a work-target issue from a similar title, branch name, or repository context.
+- Never guess a session ID. If the current session ID cannot be determined, add the work-target issue but leave `Session ID` and `Session state` unchanged.
+- Use the configured GitHub MCP Projects tools when available; otherwise use `gh project` and the GitHub GraphQL API.
+
+Status precedence is: `Merged` > `CI failing`/`CI pending`/`CI passing` > `PR open` > `Session in progress` > `Session idle` > `Inbox`.
+
 ## Investigating Issues — Feature Flag Correlation
 
 When investigating a production issue and you suspect a feature flag state might be involved, **always check feature flag changes first** before diving deeper. Use the Datadog MCP to search events:
