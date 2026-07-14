@@ -35,7 +35,7 @@ Dotfiles and system configurations are managed with [chezmoi](https://www.chezmo
 
 ## Daily Work Project Tracking
 
-The private GitHub user project `alondahari/2` ("Daily work") tracks issues across repositories.
+The private GitHub organization project `github/25157` ("Daily work") tracks issues across repositories.
 
 When the user instructs a local agent to work on a specific issue:
 
