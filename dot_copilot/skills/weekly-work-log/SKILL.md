@@ -24,39 +24,30 @@ configuration.
 
 ## Capture workflow
 
-1. Extract the following from the user's message:
-   - **What I did:** Alon's specific contribution, not the broader team's work.
-   - **Impact:** Why it mattered, who it helped, or what it unblocked.
-   - **Evidence:** Relevant PR, issue, discussion, or document links.
-   - **Status:** `Complete` or `In progress`.
-2. Preserve the user's wording where practical. Improve clarity, but do not
+1. Identify Alon's specific contribution, not the broader team's work, and any
+   impact or evidence the user supplied.
+2. Write a concise, freeform note. Preserve the user's wording where practical.
+   Use paragraphs, bullets, headings, or links only when they make that
+   particular note clearer; do not force entries into a fixed template.
+3. Improve clarity, but do not
    embellish, invent outcomes, or add unsupported metrics.
-3. Evidence is optional. Never block capture only because there is no link.
-4. If impact is missing, ask one concise question with `ask_user`.
-5. If status is missing:
-   - Treat explicit completion language such as "shipped", "merged", "resolved",
-     "finished", or "finalized" as `Complete`.
-   - Treat explicit ongoing language as `In progress`.
-   - Otherwise ask the user with `ask_user`, offering `Complete` and
-     `In progress`.
+4. Impact, evidence, and status are optional. Include them naturally when
+   supplied, but do not ask for missing fields unless the note would otherwise
+   be unclear or misleading.
+5. Wrap every reference to another GitHub issue or pull request in backticks,
+   including full URLs and shorthand such as `owner/repo#123`, so posting the
+   comment does not create cross-reference notifications or backlinks.
 6. When the user explicitly says to log, record, capture, or add the work,
    that is authorization to post the comment. Do not ask for redundant
-   confirmation after gathering required context.
+   confirmation.
 7. If the user asks only to draft or preview an entry, show the Markdown and do
    not post it.
 
-## Comment format
+## Comment style
 
-```markdown
-### What I did
-<specific contribution>
-
-**Impact:** <why it mattered>
-
-**Evidence:** <links or "None recorded">
-
-**Status:** Complete | In progress
-```
+Comments are freeform Markdown. Prefer a short natural paragraph for a single
+item. Use a small list or headings only when the user is capturing multiple
+distinct points or when structure genuinely improves readability.
 
 ## Posting
 
@@ -65,7 +56,7 @@ Use the GitHub CLI:
 ```bash
 gh issue comment 1466 \
   --repo github/agentic-automations \
-  --body '<formatted Markdown comment>'
+  --body '<freeform Markdown note>'
 ```
 
 Quote the body safely so its contents cannot be interpreted as shell syntax.
@@ -76,7 +67,7 @@ was logged.
 ## Examples
 
 - "Log that I shipped the confidence scoring API, which unblocks the UI team.
-  Evidence: https://github.com/github/example/pull/123"
+  Evidence: `https://github.com/github/example/pull/123`"
 - "Record for my weekly update: I aligned the team on the rollout plan. It
   removed ambiguity around ownership. Still in progress."
 - "Add this to my work log: reviewed the design and caught a migration risk."
