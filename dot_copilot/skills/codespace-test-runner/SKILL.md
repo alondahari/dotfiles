@@ -1,164 +1,201 @@
 ---
 name: codespace-test-runner
 description: >
-  Run github/github tests remotely in a GitHub Codespace. Use when the local
-  environment cannot run Rails tests (macOS worktree sessions, missing deps) or
-  when the user explicitly asks to run tests remotely. Supports running tests
-  against pushed branches OR uncommitted local changes (via file copy).
-  Triggers: run tests in codespace, remote tests, codespace test, test remotely.
+  Run github/github tests remotely in a dedicated disposable GitHub Codespace.
+  Use when the local environment cannot run Rails tests or when the user asks
+  to run tests remotely. Supports pushed branches and uncommitted local changes.
 ---
 
 # Codespace Test Runner
 
-Run github/github tests in a GitHub Codespace when the local environment cannot execute them (e.g., local macOS sessions, missing dependencies, or when the user explicitly requests remote execution).
+Run `github/github` tests in a dedicated disposable Codespace whose display
+name is `copilot test runner`.
 
-## Prerequisites
+## Authentication
 
-- `gh` CLI authenticated with `codespace` scope (`gh auth refresh -h github.com -s codespace`)
-- For branch-based testing: the branch must be pushed to the remote
-- For local-changes testing: an existing Codespace (any branch) is sufficient
-
-## Step 1: Find or Create a Codespace
-
-### Check for an existing Codespace on the branch
+Copilot sessions inject tokens without the `codespace` scope. Run every
+`gh codespace` command with those tokens unset:
 
 ```bash
-gh codespace list --repo github/github --json name,branch,state -q '.[] | select(.branch == "<BRANCH>")'
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ...
 ```
 
-If one exists and its state is "Available", reuse it. If state is "Shutdown", it will auto-start on the next command.
+The keyring login must have the `codespace` scope.
 
-### Create a new Codespace
+## Dedicated disposable Codespace
+
+Never copy local files into an arbitrary existing Codespace. Its checkout and
+resolved dependencies may be older than the local session, and it may contain
+another user's uncommitted work.
+
+Find the dedicated runner:
 
 ```bash
-gh codespace create --repo github/github --branch <BRANCH> --machine xLargePremiumLinux --status
+CODESPACE=$(env -u GH_TOKEN -u GITHUB_TOKEN gh codespace list \
+  --repo github/github \
+  --json name,displayName \
+  --jq '.[] | select(.displayName == "copilot test runner") | .name')
 ```
 
-- Use `xLargePremiumLinux` (32-core) for fast test runs. Fall back to `largePremiumLinux` (16-core) if creation fails.
-- Creation takes 2-5 minutes. The `--status` flag streams progress.
-- Save the codespace name from the output for subsequent commands.
+The user has approved treating only this Codespace as disposable. It is safe to
+reset and clean this Codespace. Never reset or clean any other Codespace.
 
-## Step 2: Run Tests
+### First-time setup
 
-Use `gh codespace exec` to run commands inside the Codespace:
+Always select the primary devcontainer explicitly. `github/github` contains
+multiple devcontainers, so omitting this flag makes non-interactive creation
+fail with `failed to prompt: no terminal`.
 
 ```bash
-# Run a specific test file
-gh codespace exec -c <CODESPACE_NAME> -- bin/rails test <path/to/test_file.rb>
-
-# Run a specific test by line number
-gh codespace exec -c <CODESPACE_NAME> -- bin/rails test <path/to/test_file.rb>:<LINE>
-
-# Run tests with all feature flags enabled (matches CI)
-gh codespace exec -c <CODESPACE_NAME> -- env TEST_ALL_FEATURES=1 bin/rails test <path/to/test_file.rb>
-
-# Run tests for a package
-gh codespace exec -c <CODESPACE_NAME> -- bin/rails test packages/<package>/test/
-
-# Run test_oracle to discover relevant tests
-gh codespace exec -c <CODESPACE_NAME> -- bin/rails test_oracle
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace create \
+  --repo github/github \
+  --branch master \
+  --devcontainer-path .devcontainer/devcontainer.json \
+  --machine xLargePremiumLinux \
+  --display-name "copilot test runner" \
+  --idle-timeout 30m \
+  --retention-period 24h \
+  --status
 ```
 
-### Environment variables
+On the first run, GitHub prints an `allow_permissions` URL and exits. Open that
+exact URL, authorize the requested permissions, and rerun the same command.
+Approval is required for authenticated `git fetch` and dependency access.
+Do not use `--default-permissions`: it creates a runner whose checkout cannot
+fetch `github/github`. Do not substitute another Codespace.
 
-Pass environment variables using `env` before the command:
+## Running remote commands
+
+GitHub CLI 2.96 does not provide `gh codespace exec`. Use `gh codespace ssh`.
+Always invoke the command through a login shell: the Codespace supplies
+`GITHUB_TOKEN` and related authentication variables from its login profile.
+Without `bash -lc`, authenticated `git fetch` fails.
 
 ```bash
-gh codespace exec -c <CODESPACE_NAME> -- env MULTI_TENANT_ENTERPRISE=1 TEST_ALL_FEATURES=1 bin/rails test <path>
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github && <COMMAND>'"
 ```
 
-### Interactive shell (for debugging)
+## Test uncommitted local changes
+
+### 1. Align the full checkout
+
+Do not copy changed files over a stale revision. Align the entire disposable
+checkout to the local session's committed base first:
 
 ```bash
-gh codespace ssh -c <CODESPACE_NAME>
+BASE_SHA=$(git rev-parse HEAD)
+
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github &&
+    git fetch origin &&
+    git cat-file -e ${BASE_SHA}^{commit} &&
+    git reset --hard ${BASE_SHA} &&
+    git clean -fd'"
 ```
 
-## Step 3: Copy Files To/From Codespace
+If `git cat-file` fails, the local `HEAD` is not available remotely. Do not
+fall back to a stale revision; push the branch before testing.
 
-If you need to push local changes that aren't committed:
+### 2. Mirror local changes
+
+Copy modified and untracked files into `/workspaces/github`. Remove paths that
+are deleted locally from the disposable checkout too:
 
 ```bash
-# Copy a file into the Codespace
-gh codespace cp <local_path> remote:<remote_path> -c <CODESPACE_NAME>
-
-# Copy a file out of the Codespace
-gh codespace cp remote:<remote_path> <local_path> -c <CODESPACE_NAME>
+git diff --name-only --diff-filter=ACMRTUXB HEAD
+git ls-files --others --exclude-standard
+git diff --name-only --diff-filter=D HEAD
 ```
 
-## Step 4: Cleanup
-
-Stop the Codespace when done to avoid billing:
+For each modified or untracked file, create its parent directory remotely and
+copy it:
 
 ```bash
-gh codespace stop -c <CODESPACE_NAME>
+FILE=app/api/issues.rb
+REMOTE_DIR=$(dirname "$FILE")
+
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'mkdir -p /workspaces/github/${REMOTE_DIR}'"
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace cp \
+  "$FILE" \
+  "remote:/workspaces/github/$FILE" \
+  -c "$CODESPACE"
 ```
 
-Delete if no longer needed:
+For each locally deleted path:
 
 ```bash
-gh codespace delete -c <CODESPACE_NAME>
+FILE=app/api/deleted_file.rb
+
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'rm -f /workspaces/github/${FILE}'"
 ```
 
-## Common Patterns
+Do not create a second worktree whose `vendor` directory points at the primary
+checkout. That can corrupt the shared bundle while leaving source and
+dependencies mismatched.
 
-### Test uncommitted changes WITHOUT pushing (preferred for draft PRs)
+### 3. Refresh dependencies
 
-This avoids polluting your PR with "wip" commits. Use an existing Codespace on any branch:
+Always refresh dependencies after the full source and local changes are in
+place. This prevents failures such as a source revision requiring
+`moda-service-discovery` while the runner still has an older resolved bundle.
 
 ```bash
-# 1. Find or create a Codespace (can be on master — we'll copy files over)
-CODESPACE=$(gh codespace list --repo github/github --json name,state -q '.[0].name')
-# Or create one: gh codespace create --repo github/github --branch master --machine xLargePremiumLinux
-
-# 2. Copy modified files into the Codespace
-gh codespace cp app/api/issues.rb remote:/workspaces/github/app/api/issues.rb -c "$CODESPACE"
-gh codespace cp test/integration/api/issues_test.rb remote:/workspaces/github/test/integration/api/issues_test.rb -c "$CODESPACE"
-
-# 3. Run tests (the copied files override what's on disk)
-gh codespace exec -c "$CODESPACE" -- env TEST_ALL_FEATURES=1 bin/rails test test/integration/api/issues_test.rb
-
-# 4. (Optional) Reset the codespace back to clean state
-gh codespace exec -c "$CODESPACE" -- git checkout -- .
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github && bin/bundle install'"
 ```
 
-**Tip:** To copy all modified files at once:
+### 4. Run validation
+
 ```bash
-git diff --name-only | while read f; do
-  gh codespace cp "$f" "remote:/workspaces/github/$f" -c "$CODESPACE"
-done
+# Rails tests with CI feature flags
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github &&
+    TEST_ALL_FEATURES=1 bin/rails test <path>'"
+
+# RuboCop
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github && bin/rubocop <path>'"
+
+# Sorbet
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github && bin/srb tc <path>'"
 ```
 
-### Push branch and run tests remotely
+### 5. Clean up
+
+Reset only the dedicated disposable checkout, then stop it:
 
 ```bash
-# 1. Push current branch
-git push origin <BRANCH>
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github && git reset --hard HEAD && git clean -fd'"
 
-# 2. Create codespace (or reuse existing)
-CODESPACE=$(gh codespace create --repo github/github --branch <BRANCH> --machine xLargePremiumLinux 2>&1 | tail -1)
-
-# 3. Run tests
-gh codespace exec -c "$CODESPACE" -- bin/rails test <path>
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace stop -c "$CODESPACE"
 ```
 
-### Run RuboCop in Codespace
+## Test a pushed branch
 
 ```bash
-gh codespace exec -c <CODESPACE_NAME> -- bin/rubocop <path/to/file.rb>
-```
+BRANCH=<BRANCH>
 
-### Run Sorbet type checking in Codespace
-
-```bash
-gh codespace exec -c <CODESPACE_NAME> -- bin/srb tc <path/to/file.rb>
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ssh -c "$CODESPACE" -- \
+  "bash -lc 'cd /workspaces/github &&
+    git fetch origin ${BRANCH} &&
+    git reset --hard origin/${BRANCH} &&
+    git clean -fd &&
+    bin/bundle install &&
+    TEST_ALL_FEATURES=1 bin/rails test <path>'"
 ```
 
 ## Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
-| `exec` hangs or times out | Codespace may be starting up — wait 30s and retry |
-| "codespace not found" | Verify name with `gh codespace list` |
-| Tests fail with DB errors | Run `gh codespace exec -c <NAME> -- bin/rails db:test:prepare` |
-| Branch out of date | Run `gh codespace exec -c <NAME> -- git pull origin <BRANCH>` |
-| Permission denied | Ensure `gh auth status` shows correct scopes (`codespace`) |
+| `failed to prompt: no terminal` | Pass `--devcontainer-path .devcontainer/devcontainer.json` |
+| Dedicated runner missing | Use first-time setup; do not reuse another Codespace |
+| `git fetch` asks for a username | Ensure permissions were authorized and use `bash -lc` |
+| Base SHA unavailable | Push the branch; do not test against a different revision |
+| Dependency missing | Confirm checkout alignment, then run `bin/bundle install` |
+| DB errors | Run `bin/rails db:test:prepare` in the aligned checkout |

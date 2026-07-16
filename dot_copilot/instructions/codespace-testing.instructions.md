@@ -16,3 +16,16 @@ This applies to:
 - Any command that requires the full Rails environment
 
 Invoke the skill, then follow its steps to find or create a Codespace and run the commands remotely.
+
+## Codespace Authentication
+
+Copilot sessions inject a `GH_TOKEN` that does not have the `codespace` scope,
+overriding the persisted `gh` keyring login that does. Run every `gh codespace`
+command with the injected tokens unset:
+
+```bash
+env -u GH_TOKEN -u GITHUB_TOKEN gh codespace <command>
+```
+
+Do not ask the user to refresh authentication unless that command also reports
+that the keyring login lacks the `codespace` scope.

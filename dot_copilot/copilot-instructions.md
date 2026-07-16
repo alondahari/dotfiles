@@ -40,15 +40,15 @@ The private GitHub organization project `github/25157` ("Daily work") tracks iss
 When the user instructs a local agent to work on a specific issue:
 
 - At the start of the interaction, add that work-target issue to this board if it is not already present. Issues from any GitHub repository are eligible.
-- At the start of active work, update `Session ID` with the current app project-session ID when available, set `Session state` to `In progress`, and set `Status` to `Session in progress` unless the issue already has a higher-precedence PR or CI status.
-- Before yielding to the user, waiting for input, or finishing work, set `Session state` to `Idle` and set `Status` to `Session idle` unless PR or CI state has higher precedence.
+- At the start of active work, update `Session ID` with the current app project-session ID when available and set `Session link` to `http://127.0.0.1:43119/sessions/<Session ID>`.
+- Do not update `Session status`; the local lifecycle watcher is its sole writer.
 - Update `Last synced` whenever changing these fields.
 - Do not add issues that are merely mentioned, referenced for context, discovered during investigation, or linked from the work-target issue.
 - Never infer a work-target issue from a similar title, branch name, or repository context.
-- Never guess a session ID. If the current session ID cannot be determined, add the work-target issue but leave `Session ID` and `Session state` unchanged.
+- Never guess a session ID. If the current session ID cannot be determined, add the work-target issue but leave `Session ID`, `Session link`, and `Session status` unchanged.
 - Use the configured GitHub MCP Projects tools when available; otherwise use `gh project` and the GitHub GraphQL API.
 
-Status precedence is: `Merged` > `CI failing`/`CI pending`/`CI passing` > `PR open` > `Session in progress` > `Session idle` > `Inbox`.
+Session and pull request status are independent. The local lifecycle watcher updates `Session status`; the scheduled reconciler updates `PR status` and `CI state`.
 
 ## Investigating Issues — Feature Flag Correlation
 

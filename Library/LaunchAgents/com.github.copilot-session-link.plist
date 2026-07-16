@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.github.copilot-session-link</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/alondahari/.nvm/nvm-exec</string>
+		<string>node</string>
+		<string>/Users/alondahari/.local/bin/copilot-session-link.cjs</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>HOME</key>
+		<string>/Users/alondahari</string>
+		<key>NVM_DIR</key>
+		<string>/Users/alondahari/.nvm</string>
+		<key>NODE_VERSION</key>
+		<string>default</string>
+	</dict>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>/tmp/com.github.copilot-session-link.log</string>
+	<key>StandardErrorPath</key>
+	<string>/tmp/com.github.copilot-session-link.error.log</string>
+</dict>
+</plist>
