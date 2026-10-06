@@ -29,26 +29,18 @@ Then use it to curl:
 curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
 ```
 
+## Interactive Browser and API Verification
+
+When I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
+
+- Use a **dedicated Codespace for this session's preview** (or reuse one only if I explicitly identify it). Never use the shared `copilot test runner` pool or another session's Codespace for an interactive preview. Do not stop, reconfigure, or change port visibility on someone else's Codespace.
+- Start the relevant server inside that Codespace and verify the app/API responds there before exposing it. For browser access, use that Codespace's own private forwarded-port `browseUrl` from `env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ports -c <codespace> --json sourcePort,browseUrl,visibility`; never reuse or construct a URL from a different Codespace.
+- For API calls from this machine, keep an attached `gh codespace ports forward <remote-port>:<unused-local-port> -c <codespace>` tunnel running for this session. Choose a free **local** port distinct from other sessions, even when they forward the same remote port; check the tunnel and a representative API request through it before reporting success. Preserve any required `Host` header for virtual-host APIs (for example, `api.github.localhost`) and keep credentials out of URLs and logs.
+- Keep forwarded ports private unless I explicitly request broader access. Report the Codespace name, URL or local port, and how long the preview will remain available. If setup or forwarding fails, diagnose it rather than silently using an old tunnel. Do not delete a Codespace without asking.
+
 ## System Configuration
 
 Dotfiles and system configurations are managed with [chezmoi](https://www.chezmoi.io/). When adding or modifying shell config (e.g. `~/.zshrc`), PATH entries, environment variables, or other system-level dotfiles, always apply changes through chezmoi source files rather than editing targets directly. The chezmoi source directory is `~/.local/share/chezmoi/`.
-
-## Daily Work Project Tracking
-
-The private GitHub organization project `github/25157` ("Daily work") tracks issues across repositories.
-
-When the user instructs a local agent to work on a specific issue:
-
-- At the start of the interaction, add that work-target issue to this board if it is not already present. Issues from any GitHub repository are eligible.
-- At the start of active work, update `Session ID` with the current app project-session ID when available and set `Session link` to `http://127.0.0.1:43119/sessions/<Session ID>`.
-- Do not update `Session status`; the local lifecycle watcher is its sole writer.
-- Update `Last synced` whenever changing these fields.
-- Do not add issues that are merely mentioned, referenced for context, discovered during investigation, or linked from the work-target issue.
-- Never infer a work-target issue from a similar title, branch name, or repository context.
-- Never guess a session ID. If the current session ID cannot be determined, add the work-target issue but leave `Session ID`, `Session link`, and `Session status` unchanged.
-- Use the configured GitHub MCP Projects tools when available; otherwise use `gh project` and the GitHub GraphQL API.
-
-Session and pull request status are independent. The local lifecycle watcher updates `Session status`; the scheduled reconciler updates `PR status` and `CI state`.
 
 ## Investigating Issues — Feature Flag Correlation
 

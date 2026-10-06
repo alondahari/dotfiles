@@ -1,8 +1,13 @@
 {
 	"manifest_version": 3,
 	"name": "Copilot Session Links",
-	"version": "1.0.0",
-	"description": "Open Daily work project session links directly in GitHub Copilot.",
+	"version": "1.3.2",
+	"description": "Open Daily work session and Slack action links without leaving GitHub.",
+	"permissions": ["tabs", "webNavigation"],
+	"host_permissions": ["http://127.0.0.1:43119/*"],
+	"background": {
+		"service_worker": "background.js"
+	},
 	"content_scripts": [
 		{
 			"matches": ["https://github.com/*"],
