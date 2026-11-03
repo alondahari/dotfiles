@@ -8,11 +8,32 @@
 
 ## Git Operations
 
-**NEVER run `git push` or `git commit` without explicit instruction in the current user message.** This is a critical rule — violating it is the single most disruptive thing you can do.
+- Agents may commit and push task-scoped changes whenever they are ready, including follow-up fixes, without asking for separate consent or requiring an explicit instruction in the current message.
+- Respect any explicit instruction to pause, hold, or not push. This permission does not authorize destructive Git operations, force-pushes, or merging PRs.
 
-- "Commit and open a PR" → commit, push, and open a PR (this is one explicit instruction)
-- After that, if you make more changes (e.g., addressing review feedback, fixing a bug), **do NOT commit or push automatically** — stop and tell the user what you changed, then wait for them to say "commit", "push", or similar
-- Previous requests to commit/push do NOT carry over to future messages — each push needs its own explicit instruction
+## Required Verification Before Opening a Pull Request
+
+- Before opening any PR, verify the actual changed behavior hands-on in a dedicated GitHub Codespace. Automated tests alone do not satisfy this requirement. Use the browser, API, CLI, or other interface relevant to the change.
+- Provide me with a working preview URL or API endpoint and reproducible steps so I can manually verify the change myself. Give me the direct link rather than opening a browser canvas.
+- Capture relevant screenshots or videos and attach them to the PR, preferably showing before and after with comparable inputs, data, and feature-flag settings.
+- For changes that are not browser-visible, record the exact verification performed and include before-and-after evidence in the PR. For APIs, include the request method, URL/path, relevant headers and payload, response status, and response body. For CLI or other changes, include the commands or actions and observed outputs.
+- Redact credentials, tokens, and sensitive data from all evidence while keeping the verification reproducible. Label baseline and changed behavior clearly; never invent baseline results.
+- If Codespace setup, verification, or evidence capture is blocked or not applicable, explain the specific limitation and ask me how to proceed before opening the PR. Do not silently skip verification or claim unperformed checks.
+
+## Pull Request Descriptions
+
+- When creating or updating PRs, keep automated-test summaries concise: say "Validated with tests" rather than enumerating test files, commands, run counts, or assertion counts unless I explicitly request those details. This does not replace the required hands-on verification steps and evidence above.
+- Give PR screenshots and recordings a concise caption explaining what behavior they demonstrate and why it matters to the change. Retain useful alt text.
+
+## Collaborative Docs API
+
+- For local GitHub API requests, do not assume `gh auth token` uses the token saved by GitHub CLI: `GH_TOKEN` or `GITHUB_TOKEN` in the environment can override it. To use the saved keyring credential, run `env -u GH_TOKEN -u GITHUB_TOKEN gh auth token --hostname github.com` and pass its output directly to the request without printing or logging the token.
+- A `github.com/writing/doc/<document-id>` URL gives the document ID, not its owner. Verify whether the API route should use `/users/<login>/docs/<document-id>` or `/orgs/<org>/docs/<document-id>`; never infer the owner from the URL or current account alone.
+- For reads, use `GET /users/{login}/docs/{document_id}` or `GET /orgs/{org}/docs/{document_id}` and confirm the response includes the document content. A `404` may mean a wrong owner/route, missing document, insufficient token scope, missing Docs enrollment, or a disabled rollout flag; do not report a successful read unless content was returned.
+- To create a document with Markdown, use `POST /users/{login}/docs` or `POST /orgs/{org}/docs` with JSON `{"title":"...","markdown":"..."}`. Check the response for the created document ID, then `GET` it to verify the saved Markdown.
+- Empty-document creation is also supported with a bodyless `POST` to the collection endpoint. To rename, use `PATCH` on the document endpoint with `{"title":"..."}`; this changes only the title, not Markdown content. Existing-document Markdown editing is not supported by this API.
+- Deletion uses `DELETE` on the document endpoint. Treat it as destructive: only delete when explicitly requested and verify the HTTP status. Avoid automatically retrying a `POST` after a timeout because it may create a duplicate.
+- Inspect the actual HTTP status and response body for every write; never claim success from a command alone. `write:collab_docs` includes read access, but token scopes do not replace required Docs enrollment or feature-flag access.
 
 ## Testing with Feature Flags
 
@@ -31,9 +52,11 @@ curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
 
 ## Interactive Browser and API Verification
 
-When I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
+Before opening a PR, or whenever I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
 
 - Use a **dedicated Codespace for this session's preview** (or reuse one only if I explicitly identify it). Never use the shared `copilot test runner` pool or another session's Codespace for an interactive preview. Do not stop, reconfigure, or change port visibility on someone else's Codespace.
+- When creating a Codespace, **never pass `--default-permissions`**: it opts out of the devcontainer's requested additional repository permissions. Omit it and preserve GitHub's browser authorization step if required; do not bypass that step to make creation non-interactive.
+- Run authenticated remote setup through `bash -lic '<command>'`. The interactive login shell loads the Codespace's `GITHUB_TOKEN`; a plain SSH command can incorrectly make it appear missing. Check token presence without printing its value, then verify access to the required private repository before diagnosing missing credentials or requesting a PAT.
 - Start the relevant server inside that Codespace and verify the app/API responds there before exposing it. For browser access, use that Codespace's own private forwarded-port `browseUrl` from `env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ports -c <codespace> --json sourcePort,browseUrl,visibility`; never reuse or construct a URL from a different Codespace.
 - For API calls from this machine, keep an attached `gh codespace ports forward <remote-port>:<unused-local-port> -c <codespace>` tunnel running for this session. Choose a free **local** port distinct from other sessions, even when they forward the same remote port; check the tunnel and a representative API request through it before reporting success. Preserve any required `Host` header for virtual-host APIs (for example, `api.github.localhost`) and keep credentials out of URLs and logs.
 - Keep forwarded ports private unless I explicitly request broader access. Report the Codespace name, URL or local port, and how long the preview will remain available. If setup or forwarding fails, diagnose it rather than silently using an old tunnel. Do not delete a Codespace without asking.
