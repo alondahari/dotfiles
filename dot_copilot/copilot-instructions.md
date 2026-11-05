@@ -18,14 +18,16 @@
 - When addressing PR review feedback, make a separate commit for each addressed review comment; do not combine fixes for multiple comments in one commit.
 - Keep commits small and focused on one logical change. Use concise, descriptive imperative commit subjects, adding a body only when it provides useful context.
 
-## Required Verification Before Opening a Pull Request
+## Pull Request Workflow and Required Verification
 
-- Before opening any PR, verify the actual changed behavior hands-on in a dedicated GitHub Codespace. Automated tests alone do not satisfy this requirement. Use the browser, API, CLI, or other interface relevant to the change.
+- For PR work, first commit and push changes, then open a draft PR (or update the existing PR), then run required hands-on Codespace verification and targeted tests so CI can run in parallel. Do not delay the push or PR for validation; this ordering does not broaden when tests are required by the applicable testing instructions.
+- Create and keep PRs as drafts unless I explicitly request ready-for-review or manually mark them ready. Do not automatically mark PRs ready after verification.
+- After opening or updating the PR, verify the actual changed behavior hands-on in a dedicated GitHub Codespace. Automated tests alone do not satisfy this requirement. Use the browser, API, CLI, or other interface relevant to the change.
 - Provide me with a working preview URL or API endpoint and reproducible steps so I can manually verify the change myself. Give me the direct link rather than opening a browser canvas.
 - Capture relevant screenshots or videos and attach them to the PR, preferably showing before and after with comparable inputs, data, and feature-flag settings.
 - For changes that are not browser-visible, record the exact verification performed and include before-and-after evidence in the PR. For APIs, include the request method, URL/path, relevant headers and payload, response status, and response body. For CLI or other changes, include the commands or actions and observed outputs.
 - Redact credentials, tokens, and sensitive data from all evidence while keeping the verification reproducible. Label baseline and changed behavior clearly; never invent baseline results.
-- If Codespace setup, verification, or evidence capture is blocked or not applicable, explain the specific limitation and ask me how to proceed before opening the PR. Do not silently skip verification or claim unperformed checks.
+- Add verification results and evidence to the PR afterward. If Codespace setup, verification, or evidence capture is blocked or not applicable, report the specific limitation and keep the PR draft. Do not silently skip verification or claim unperformed checks.
 
 ## Pull Request Descriptions
 
@@ -73,7 +75,7 @@ curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
 
 ## Interactive Browser and API Verification
 
-Before opening a PR, or whenever I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
+After pushing changes and opening or updating a PR, or whenever I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
 
 - Use a **dedicated Codespace for this session's preview** (or reuse one only if I explicitly identify it). Never use the shared `copilot test runner` pool or another session's Codespace for an interactive preview. Do not stop, reconfigure, or change port visibility on someone else's Codespace.
 - When creating a Codespace, **never pass `--default-permissions`**: it opts out of the devcontainer's requested additional repository permissions. Omit it and preserve GitHub's browser authorization step if required; do not bypass that step to make creation non-interactive.
