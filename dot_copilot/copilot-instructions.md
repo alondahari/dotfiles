@@ -6,6 +6,11 @@
 - Use CommonJS (require) style for Node.js scripts in this project
 - The `gh` CLI is available and preferred for GitHub API calls
 
+## Package Installation
+
+- When not connected to the Microsoft VPN, run package-install commands targeting public npm, Yarn, or PyPI registries through `gh cfs -- <command>`. This applies to npm, Yarn, pnpm, Bun, and Python package installers (for example, `gh cfs -- npm install`, `gh cfs -- yarn install`, `gh cfs -- pnpm install`, `gh cfs -- bun install`, `gh cfs -- python -m pip install <package>`, or `gh cfs -- uv pip install <package>`).
+- The Microsoft VPN is the supported alternative to `gh cfs`. Do not change registry configuration to bypass Central Feed Service (CFS) restrictions.
+
 ## Git Operations
 
 - Agents may commit and push task-scoped changes whenever they are ready, including follow-up fixes, without asking for separate consent or requiring an explicit instruction in the current message.
@@ -66,6 +71,8 @@ Before opening a PR, or whenever I ask to verify changes in a browser or against
 ## System Configuration
 
 Dotfiles and system configurations are managed with [chezmoi](https://www.chezmoi.io/). When adding or modifying shell config (e.g. `~/.zshrc`), PATH entries, environment variables, or other system-level dotfiles, always apply changes through chezmoi source files rather than editing targets directly. The chezmoi source directory is `~/.local/share/chezmoi/`.
+
+- Whenever updating my Copilot instructions, automatically commit and push the task-scoped changes and apply the updated instructions through chezmoi.
 
 ## Investigating Issues — Feature Flag Correlation
 
