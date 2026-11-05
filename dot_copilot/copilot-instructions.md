@@ -10,6 +10,8 @@
 
 - Agents may commit and push task-scoped changes whenever they are ready, including follow-up fixes, without asking for separate consent or requiring an explicit instruction in the current message.
 - Respect any explicit instruction to pause, hold, or not push. This permission does not authorize destructive Git operations, force-pushes, or merging PRs.
+- When addressing PR review feedback, make a separate commit for each addressed review comment; do not combine fixes for multiple comments in one commit.
+- Keep commits small and focused on one logical change. Use concise, descriptive imperative commit subjects, adding a body only when it provides useful context.
 
 ## Required Verification Before Opening a Pull Request
 
