@@ -32,6 +32,20 @@
 - When creating or updating PRs, keep automated-test summaries concise: say "Validated with tests" rather than enumerating test files, commands, run counts, or assertion counts unless I explicitly request those details. This does not replace the required hands-on verification steps and evidence above.
 - Give PR screenshots and recordings a concise caption explaining what behavior they demonstrate and why it matters to the change. Retain useful alt text.
 
+## PR Review Comment Style
+
+- Apply this style when explicitly asked to post review comments or feedback on someone's PR. Only post review replies or comments when the user explicitly asks; this style does not authorize posting.
+- Comment inline on the exact changed line or range that matters. Submit a plain comment review, never an approval or a request for changes. Only when no changed line is a sensible anchor, leave one short PR conversation comment naming the file path. Keep one concern per comment; do not add a summary or overview comment.
+- Write like an experienced teammate: short, specific, and curious. Use 1-3 sentences covering the concern, a concrete reason, and usually an invitation to respond. Prefer questions over verdicts; name the function, input, failure mode, or consequence, and suggest directions lightly ("Could we...", "Maybe...").
+- Vary openings and endings naturally; do not use a fixed template or start or end consecutive comments the same way. Mix questions such as "What happens here if...?" or "Should this... too?" with plain observations.
+- Avoid headings, bullet lists, bold labels, severity or confidence scores, long explanations, restating the diff, hedging filler, false certainty, generic advice, mentioning AI or tools, and private context.
+
+Examples:
+
+> Adding `| string` makes this effectively just `string`, so typos in the analytics target will compile. Could we map assistant keys to the known targets instead?
+
+> Looks like this describes `DocsViewer`, but it is attached to `UnsupportedDocsViewer`. Can we move it above the export it documents so the editor hover shows the right explanation?
+
 ## Collaborative Docs API
 
 - For local GitHub API requests, do not assume `gh auth token` uses the token saved by GitHub CLI: `GH_TOKEN` or `GITHUB_TOKEN` in the environment can override it. To use the saved keyring credential, run `env -u GH_TOKEN -u GITHUB_TOKEN gh auth token --hostname github.com` and pass its output directly to the request without printing or logging the token.
