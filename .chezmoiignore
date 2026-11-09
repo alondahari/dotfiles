@@ -1,4 +1,8 @@
 {{- if .codespaces }}
 .copilot/agents/**
 .copilot/mcp-config.json
+run_after_configure_plugin_package_downloads.js
+{{- end }}
+{{- if not .mac }}
+Library/LaunchAgents/com.github.package-download-defaults.plist
 {{- end }}

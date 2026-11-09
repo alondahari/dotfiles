@@ -1,1 +1,5 @@
 # . "$HOME/.cargo/env"
+
+# Also cover npm children that replace HOME and cannot read ~/.npmrc.
+export npm_config_update_notifier=false
+export npm_config_omit_lockfile_registry_resolved=true

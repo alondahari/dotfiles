@@ -1,0 +1,3 @@
+# Downloads still need gh cfs; these defaults do not authenticate package feeds.
+update-notifier=false
+omit-lockfile-registry-resolved=true

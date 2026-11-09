@@ -1,0 +1,7 @@
+# Use gh cfs -- uv ... for downloads; it supplies temporary feed credentials.
+# Project indexes and existing lockfile artifact URLs can override this default.
+[[index]]
+name = "cfs"
+url = "https://pkgs.dev.azure.com/github-cfs/GitHubCFS/_packaging/github-cfs-pypi/pypi/simple/"
+default = true
+authenticate = "always"

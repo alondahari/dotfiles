@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+const fs = require('node:fs');
+const path = require('node:path');
+
+const configPath = path.join(
+  {{ .chezmoi.homeDir | toJson }},
+  '.copilot/installed-plugins/planning-tracking/pt-staffing-tracker/.mcp.json',
+);
+
+if (fs.existsSync(configPath)) {
+  const original = fs.readFileSync(configPath, 'utf8');
+  const config = JSON.parse(original);
+  const gh = {{ if .mac }}'/opt/homebrew/bin/gh'{{ else }}{{ lookPath "gh" | toJson }}{{ end }};
+
+  if (!gh || !fs.existsSync(gh)) {
+    throw new Error('gh is required for CFS-backed MCP package downloads');
+  }
+
+  for (const name of ['hubbers', 'workiq']) {
+    const server = config.mcpServers?.[name];
+    if (!server) continue;
+
+    if (server.command === 'uvx') {
+      server.command = gh;
+      server.args = ['cfs', '--', 'uv', 'tool', 'run', ...(server.args || [])];
+    } else if (server.command === 'npx') {
+      server.command = gh;
+      server.args = ['cfs', '--', 'npx', ...(server.args || [])];
+    } else if (server.command !== gh || server.args?.[0] !== 'cfs') {
+      throw new Error(`Review the changed ${name} launcher before applying CFS configuration`);
+    }
+
+    if (name === 'workiq') {
+      server.env = { ...server.env, npm_config_update_notifier: 'false' };
+    }
+  }
+
+  const updated = `${JSON.stringify(config, null, 2)}\n`;
+  if (updated !== original) {
+    if (fs.readFileSync(configPath, 'utf8') !== original) {
+      throw new Error('Plugin configuration changed concurrently; apply chezmoi again');
+    }
+    fs.writeFileSync(configPath, updated, { mode: 0o600 });
+  }
+}
