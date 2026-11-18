@@ -36,3 +36,12 @@ env -u GH_TOKEN -u GITHUB_TOKEN gh codespace <command>
 
 Do not ask the user to refresh authentication unless that command also reports
 that the keyring login lacks the `codespace` scope.
+
+Never pass `--default-permissions` when creating a Codespace. It opts out of
+additional repository permissions requested by the devcontainer; preserve the
+browser authorization step instead.
+
+Run authenticated remote commands through `bash -lic '<command>'` so the
+interactive login shell loads the Codespace token. A plain SSH command may not
+inherit `GITHUB_TOKEN`. Check only its presence, never print its value, and verify
+private repository access before requesting new credentials.

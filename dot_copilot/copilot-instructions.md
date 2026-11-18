@@ -37,10 +37,18 @@
 
 ### Reviewer-friendly descriptions
 
-- Write like a friendly teammate who respects the reviewer's time. Lead with what changed and why, keep the description easy to scan, and include only the context needed to review.
+- Describe the final diff, not the history of developing it.
+- Write like a friendly teammate who respects the reviewer's time. Lead with what changed and why. Make the description understandable without reading linked issues or previous conversations.
+- Use plain language and short paragraphs. Explain only the behavior, boundaries, tradeoffs, and rollout concerns needed to review the change.
 - Call out non-obvious decisions, tradeoffs, or risks. When focused feedback would help, point to the specific behavior or part of the diff and say why it matters.
+- Avoid commit SHAs, intermediate fixes, environment identifiers, setup logs, and cleanup history.
+- Link issues only when useful. Explain the relevant requirement or decision inline; never make the link carry essential context.
+- Follow the repository template without adding repetitive prose. Omit optional, inapplicable sections when the template permits it.
+- Aim for roughly 200–400 words of reviewer-facing prose. Add detail only when it materially helps review; collapsing text is not a substitute
+  for editing it.
+- Before publishing, remove repetition, unexplained jargon, and anything
+  that belongs in an implementation log rather than a PR description.
 - Be warm and factual without overdoing thanks, praising your own work, making demands, or overstating certainty.
-- Use the repository's PR template when one exists, keeping its required sections and prompts. Avoid generic filler in the prose you add.
 
 ## PR Review Comment Style
 
