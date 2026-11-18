@@ -99,36 +99,3 @@ Manage dotfiles and system configuration through [chezmoi](https://www.chezmoi.i
 2. Stage and commit only task-scoped source changes, then land them on the intended GitHub branch (normally `main` for this repo). Honor any explicit hold.
 3. If working in a separate worktree, safely fast-forward the actual primary checkout to the landed commit; updating only the task branch does not count. From the synced primary source, use `chezmoi apply` only on affected targets that need updating. Never blanket apply.
 4. Verify that the primary checkout and the intended GitHub branch point to the same commit and that the affected installed targets match the rendered source. Report any divergence, permissions issue, or conflict instead of overwriting local changes, forcing an update, or claiming all three are synced.
-
-## Private Work Configuration
-
-Before work-related investigations or using work-only MCP servers, read
-`~/.local/share/dotfiles-work/copilot-instructions.md` and follow its guidance.
-This is an explicit file-read requirement, not an automatic Markdown include.
-Keep that guidance and any work-only connection settings out of public artifacts.
-
-The private companion repository is
-[alondahari/dotfiles-work](https://github.com/alondahari/dotfiles-work).
-If the local instructions are unavailable, read them with authenticated access:
-
-```sh
-gh api repos/alondahari/dotfiles-work/contents/copilot-instructions.md \
-  -H 'Accept: application/vnd.github.raw+json'
-```
-
-If neither source is accessible, report the limitation before proceeding with
-work that depends on the private guidance.
-
-To enable the private layer on a work machine, clone it to
-`~/.local/share/dotfiles-work`, then apply the two affected targets from the
-up-to-date primary chezmoi source:
-
-```sh
-gh repo clone alondahari/dotfiles-work ~/.local/share/dotfiles-work
-chezmoi apply ~/.copilot/copilot-instructions.md ~/.copilot/mcp-config.json
-```
-
-The MCP template merges the private checkout's `mcp-config.json` at render time.
-Without that checkout, only the public server definitions are installed. An
-existing checkout with missing, invalid, or conflicting settings fails rendering.
-After updating the private checkout, reapply the MCP target to install changes.
