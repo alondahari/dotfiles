@@ -94,9 +94,12 @@ After pushing changes and opening or updating a PR, or whenever I ask to verify 
 
 ## System Configuration
 
-Dotfiles and system configurations are managed with [chezmoi](https://www.chezmoi.io/). When adding or modifying shell config (e.g. `~/.zshrc`), PATH entries, environment variables, or other system-level dotfiles, always apply changes through chezmoi source files rather than editing targets directly. The chezmoi source directory is `~/.local/share/chezmoi/`.
+Manage dotfiles and system configuration through [chezmoi](https://www.chezmoi.io/) source files, not by editing installed targets directly. For every chezmoi change:
 
-- Whenever updating my Copilot instructions, automatically commit and push the task-scoped changes and apply the updated instructions through chezmoi.
+1. Before editing, check the intended GitHub branch, the primary source checkout (`~/.local/share/chezmoi/`), and the affected installed targets for drift. Preserve unrelated and user-owned changes.
+2. Stage and commit only task-scoped source changes, then land them on the intended GitHub branch (normally `main` for this repo). Honor any explicit hold.
+3. If working in a separate worktree, safely fast-forward the actual primary checkout to the landed commit; updating only the task branch does not count. From the synced primary source, use `chezmoi apply` only on affected targets that need updating. Never blanket apply.
+4. Verify that the primary checkout and the intended GitHub branch point to the same commit and that the affected installed targets match the rendered source. Report any divergence, permissions issue, or conflict instead of overwriting local changes, forcing an update, or claiming all three are synced.
 
 ## Investigating Issues — Feature Flag Correlation
 
