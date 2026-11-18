@@ -39,7 +39,8 @@
 
 - Write like a friendly teammate who respects the reviewer's time. Lead with what changed and why, keep the description easy to scan, and include only the context needed to review.
 - Call out non-obvious decisions, tradeoffs, or risks. When focused feedback would help, point to the specific behavior or part of the diff and say why it matters.
-- Be warm and factual without overdoing thanks, praising your own work, making demands, or overstating certainty. Avoid generic boilerplate. Don't carry `NIT` labels or the auto-generated review-comment footer into PR descriptions.
+- Be warm and factual without overdoing thanks, praising your own work, making demands, or overstating certainty.
+- Use the repository's PR template when one exists, keeping its required sections and prompts. Avoid generic filler in the prose you add.
 
 ## PR Review Comment Style
 
