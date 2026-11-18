@@ -18,19 +18,28 @@
 - When addressing PR review feedback, make a separate commit for each addressed review comment; do not combine fixes for multiple comments in one commit.
 - Keep commits small and focused on one logical change. Use concise, descriptive imperative commit subjects, adding a body only when it provides useful context.
 
-## Required Verification Before Opening a Pull Request
+## Pull Request Workflow and Required Verification
 
-- Before opening any PR, verify the actual changed behavior hands-on in a dedicated GitHub Codespace. Automated tests alone do not satisfy this requirement. Use the browser, API, CLI, or other interface relevant to the change.
+- For PR work, first commit and push changes, then open a draft PR (or update the existing PR), then run required hands-on Codespace verification and targeted tests so CI can run in parallel. Do not delay the push or PR for validation; this ordering does not broaden when tests are required by the applicable testing instructions.
+- Create and keep PRs as drafts unless I explicitly request ready-for-review or manually mark them ready. Do not automatically mark PRs ready after verification.
+- After opening or updating the PR, verify the actual changed behavior hands-on in a dedicated GitHub Codespace. Automated tests alone do not satisfy this requirement. Use the browser, API, CLI, or other interface relevant to the change.
 - Provide me with a working preview URL or API endpoint and reproducible steps so I can manually verify the change myself. Give me the direct link rather than opening a browser canvas.
 - Capture relevant screenshots or videos and attach them to the PR, preferably showing before and after with comparable inputs, data, and feature-flag settings.
 - For changes that are not browser-visible, record the exact verification performed and include before-and-after evidence in the PR. For APIs, include the request method, URL/path, relevant headers and payload, response status, and response body. For CLI or other changes, include the commands or actions and observed outputs.
 - Redact credentials, tokens, and sensitive data from all evidence while keeping the verification reproducible. Label baseline and changed behavior clearly; never invent baseline results.
-- If Codespace setup, verification, or evidence capture is blocked or not applicable, explain the specific limitation and ask me how to proceed before opening the PR. Do not silently skip verification or claim unperformed checks.
+- Treat dedicated verification Codespaces as disposable: after all validation, explicitly requested manual checks, and evidence capture are complete and the evidence is saved outside the Codespace, automatically delete the dedicated Codespace without asking for separate approval. This also applies to an explicitly authorized disposable Codespace reused for the task; never delete unrelated, shared, or other-session Codespaces.
+- Add verification results and evidence to the PR afterward. If Codespace setup, verification, or evidence capture is blocked or not applicable, report the specific limitation and keep the PR draft. Do not silently skip verification or claim unperformed checks.
 
 ## Pull Request Descriptions
 
 - When creating or updating PRs, keep automated-test summaries concise: say "Validated with tests" rather than enumerating test files, commands, run counts, or assertion counts unless I explicitly request those details. This does not replace the required hands-on verification steps and evidence above.
 - Give PR screenshots and recordings a concise caption explaining what behavior they demonstrate and why it matters to the change. Retain useful alt text.
+
+### Reviewer-friendly descriptions
+
+- Write like a friendly teammate who respects the reviewer's time. Lead with what changed and why, keep the description easy to scan, and include only the context needed to review.
+- Call out non-obvious decisions, tradeoffs, or risks. When focused feedback would help, point to the specific behavior or part of the diff and say why it matters.
+- Be warm and factual without overdoing thanks, praising your own work, making demands, or overstating certainty. Avoid generic boilerplate. Don't carry `NIT` labels or the auto-generated review-comment footer into PR descriptions.
 
 ## PR Review Comment Style
 
@@ -73,14 +82,15 @@ curl -H "Authorization: token <TOKEN>" http://api.github.localhost/<endpoint>
 
 ## Interactive Browser and API Verification
 
-Before opening a PR, or whenever I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
+After pushing changes and opening or updating a PR, or whenever I ask to verify changes in a browser or against a locally running API, set up a working Codespace preview and its tunnel, then give me the usable URL or local API endpoint. Do not stop after describing setup commands. Use the repository's existing Codespace dev-loop instructions for checkout, server startup, seed data, and health checks; this is separate from running automated tests.
 
-- Use a **dedicated Codespace for this session's preview** (or reuse one only if I explicitly identify it). Never use the shared `copilot test runner` pool or another session's Codespace for an interactive preview. Do not stop, reconfigure, or change port visibility on someone else's Codespace.
+- Use a **dedicated Codespace for this session's preview**. Reuse an existing one only if I explicitly identify it and authorize treating it as disposable, including deletion after verification; otherwise create a new dedicated Codespace. Never use the shared `copilot test runner` pool or another session's Codespace for an interactive preview. Do not stop, reconfigure, or change port visibility on someone else's Codespace.
 - When creating a Codespace, **never pass `--default-permissions`**: it opts out of the devcontainer's requested additional repository permissions. Omit it and preserve GitHub's browser authorization step if required; do not bypass that step to make creation non-interactive.
 - Run authenticated remote setup through `bash -lic '<command>'`. The interactive login shell loads the Codespace's `GITHUB_TOKEN`; a plain SSH command can incorrectly make it appear missing. Check token presence without printing its value, then verify access to the required private repository before diagnosing missing credentials or requesting a PAT.
 - Start the relevant server inside that Codespace and verify the app/API responds there before exposing it. For browser access, use that Codespace's own private forwarded-port `browseUrl` from `env -u GH_TOKEN -u GITHUB_TOKEN gh codespace ports -c <codespace> --json sourcePort,browseUrl,visibility`; never reuse or construct a URL from a different Codespace.
 - For API calls from this machine, keep an attached `gh codespace ports forward <remote-port>:<unused-local-port> -c <codespace>` tunnel running for this session. Choose a free **local** port distinct from other sessions, even when they forward the same remote port; check the tunnel and a representative API request through it before reporting success. Preserve any required `Host` header for virtual-host APIs (for example, `api.github.localhost`) and keep credentials out of URLs and logs.
-- Keep forwarded ports private unless I explicitly request broader access. Report the Codespace name, URL or local port, and how long the preview will remain available. If setup or forwarding fails, diagnose it rather than silently using an old tunnel. Do not delete a Codespace without asking.
+- Keep forwarded ports private unless I explicitly request broader access. Report the Codespace name, URL or local port, and that the preview is temporary and will be removed when verification is complete. If setup or forwarding fails, diagnose it rather than silently using an old tunnel.
+- After verification and evidence preservation, stop this session's forwarding tunnel and delete only the exact dedicated Codespace recorded for this task with `env -u GH_TOKEN -u GITHUB_TOKEN gh codespace delete -c <codespace> --force`. Confirm it is absent from `env -u GH_TOKEN -u GITHUB_TOKEN gh codespace list --json name` before reporting cleanup complete. If verification is blocked or abandoned, preserve any available evidence and perform the same cleanup once the Codespace is no longer needed. Report cleanup failures explicitly; never claim deletion succeeded without confirmation.
 
 ## System Configuration
 
