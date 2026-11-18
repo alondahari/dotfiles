@@ -100,51 +100,35 @@ Manage dotfiles and system configuration through [chezmoi](https://www.chezmoi.i
 3. If working in a separate worktree, safely fast-forward the actual primary checkout to the landed commit; updating only the task branch does not count. From the synced primary source, use `chezmoi apply` only on affected targets that need updating. Never blanket apply.
 4. Verify that the primary checkout and the intended GitHub branch point to the same commit and that the affected installed targets match the rendered source. Report any divergence, permissions issue, or conflict instead of overwriting local changes, forcing an update, or claiming all three are synced.
 
-## Investigating Issues — Feature Flag Correlation
+## Private Work Configuration
 
-When investigating a production issue and you suspect a feature flag state might be involved, **always check feature flag changes first** before diving deeper. Use the Datadog MCP to search events:
+Before work-related investigations or using work-only MCP servers, read
+`~/.local/share/dotfiles-work/copilot-instructions.md` and follow its guidance.
+This is an explicit file-read requirement, not an automatic Markdown include.
+Keep that guidance and any work-only connection settings out of public artifacts.
 
-- Query: `tags:feature_flag` with a time window of 30 minutes before/after the incident
-- For extended searches (flags enabled days/weeks ago): search up to 30 days back
-- Narrow by keyword: `tags:feature_flag *<keyword>*`
-- Narrow by team: `tags:feature_flag owning_service:github/<team>`
+The private companion repository is
+[alondahari/dotfiles-work](https://github.com/alondahari/dotfiles-work).
+If the local instructions are unavailable, read them with authenticated access:
 
-### Critical rules
+```sh
+gh api repos/alondahari/dotfiles-work/contents/copilot-instructions.md \
+  -H 'Accept: application/vnd.github.raw+json'
+```
 
-- `feature_flag` is a **standalone tag** (no value) — never use `sources:feature_flag` or `tags:feature_flag:<name>`
-- Parse event messages carefully:
-  - "enabled for X%" / "fully shipped" / "actor added" → flag was **ENABLED** (possible cause)
-  - "actor removed" / "fully disabled" / "deleted" → flag was **DISABLED** (NOT a cause of new behavior)
-- If the affected feature area doesn't match a flag name directly, trace the code path in `github/github` to find the controlling flag
+If neither source is accessible, report the limitation before proceeding with
+work that depends on the private guidance.
 
-Reference: [github/copilot-sre feature-flags workflow](https://github.com/github/copilot-sre/blob/main/.github/skills/datadog/workflows/feature-flags.md)
+To enable the private layer on a work machine, clone it to
+`~/.local/share/dotfiles-work`, then apply the two affected targets from the
+up-to-date primary chezmoi source:
 
-## Splunk MCP Usage
+```sh
+gh repo clone alondahari/dotfiles-work ~/.local/share/dotfiles-work
+chezmoi apply ~/.copilot/copilot-instructions.md ~/.copilot/mcp-config.json
+```
 
-The Splunk MCP server connects to GitHub's internal Splunk instance (`splunkazure-api.service.azure-eastus.github.net`). It runs in a Docker container with `--network host` (required for internal DNS resolution).
-
-### Log format
-
-GitHub logs use **OpenTelemetry** format. Key fields (access via `| spath`):
-
-- `Body` — the log message (main content to search/aggregate on)
-- `SeverityText` — log level (`ERROR`, `WARN`, `INFO`, etc.)
-- `TraceId`, `SpanId`, `ParentSpanId` — distributed tracing
-- `InstrumentationScope` — source system
-- `Timestamp` / `@timestamp` — event time
-- `hostname`, `kube_pod`, `kube_namespace`, `kube_container` — infrastructure context
-
-### Common indexes
-
-- `rails` — Rails application logs (web requests, controllers)
-- `prod-resque` — Background job logs (Resque/ActiveJob workers)
-- rails-exceptions -- Dedicated index for Rails exceptions
-
-### Query tips
-
-- Always use `| spath` to parse JSON fields before filtering or aggregating
-- Use `| top limit=N Body` for quick error pattern discovery
-- Use `| rex field=Body` to extract structured data from log messages
-- Use `| timechart span=Xh count` for volume-over-time analysis
-- Keep time ranges short (`-1h`, `-15m`) to avoid 504 timeouts on high-volume indexes
-- Use `| bucket _time span=2h | stats count by _time` as a lighter alternative to `timechart` for large datasets
+The MCP template merges the private checkout's `mcp-config.json` at render time.
+Without that checkout, only the public server definitions are installed. An
+existing checkout with missing, invalid, or conflicting settings fails rendering.
+After updating the private checkout, reapply the MCP target to install changes.

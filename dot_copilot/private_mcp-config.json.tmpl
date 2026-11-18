@@ -1,0 +1,72 @@
+{{- $config := mustFromJson `{
+  "mcpServers": {
+    "1up": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "1up",
+      "args": []
+    },
+    "Slack": {
+      "tools": [
+        "*"
+      ],
+      "type": "http",
+      "url": "https://mcp.slack.com/mcp",
+      "headers": {},
+      "oauthClientId": "12348411142.11062036567072",
+      "oauthPublicClient": true
+    },
+    "datadog": {
+      "tools": [
+        "*"
+      ],
+      "type": "http",
+      "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp?",
+      "headers": {}
+    },
+    "github-mcp-server": {
+      "tools": [
+        "*"
+      ],
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "X-MCP-Features": "issues_granular"
+      }
+    },
+    "hubbers-mcp": {
+      "tools": [
+        "*"
+      ],
+      "command": "/opt/homebrew/bin/gh",
+      "args": [
+        "cfs",
+        "--",
+        "uv",
+        "--directory",
+        "/Users/alondahari/code/work/hubbers-mcp-server",
+        "run",
+        "hubbers.py"
+      ]
+    }
+  }
+}` -}}
+{{- $workDir := joinPath .chezmoi.homeDir ".local/share/dotfiles-work" -}}
+{{- if stat $workDir -}}
+  {{- $work := include (joinPath $workDir "mcp-config.json") | mustFromJson -}}
+  {{- if not (kindIs "map" $work) -}}
+    {{- fail "Private MCP configuration must be an object" -}}
+  {{- end -}}
+  {{- if not (kindIs "map" $work.mcpServers) -}}
+    {{- fail "Private MCP configuration must contain an mcpServers object" -}}
+  {{- end -}}
+  {{- range $name, $server := $work.mcpServers -}}
+    {{- if hasKey $config.mcpServers $name -}}
+      {{- fail (printf "Private MCP server %q conflicts with a public definition" $name) -}}
+    {{- end -}}
+    {{- $_ := set $config.mcpServers $name $server -}}
+  {{- end -}}
+{{- end -}}
+{{ $config | toPrettyJson }}
