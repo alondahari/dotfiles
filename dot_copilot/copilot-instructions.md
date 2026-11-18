@@ -56,16 +56,6 @@ Examples:
 
 > Looks like this describes `DocsViewer`, but it is attached to `UnsupportedDocsViewer`. Can we move it above the export it documents so the editor hover shows the right explanation?
 
-## Collaborative Docs API
-
-- For local GitHub API requests, do not assume `gh auth token` uses the token saved by GitHub CLI: `GH_TOKEN` or `GITHUB_TOKEN` in the environment can override it. To use the saved keyring credential, run `env -u GH_TOKEN -u GITHUB_TOKEN gh auth token --hostname github.com` and pass its output directly to the request without printing or logging the token.
-- A `github.com/writing/doc/<document-id>` URL gives the document ID, not its owner. Verify whether the API route should use `/users/<login>/docs/<document-id>` or `/orgs/<org>/docs/<document-id>`; never infer the owner from the URL or current account alone.
-- For reads, use `GET /users/{login}/docs/{document_id}` or `GET /orgs/{org}/docs/{document_id}` and confirm the response includes the document content. A `404` may mean a wrong owner/route, missing document, insufficient token scope, missing Docs enrollment, or a disabled rollout flag; do not report a successful read unless content was returned.
-- To create a document with Markdown, use `POST /users/{login}/docs` or `POST /orgs/{org}/docs` with JSON `{"title":"...","markdown":"..."}`. Check the response for the created document ID, then `GET` it to verify the saved Markdown.
-- Empty-document creation is also supported with a bodyless `POST` to the collection endpoint. To rename, use `PATCH` on the document endpoint with `{"title":"..."}`; this changes only the title, not Markdown content. Existing-document Markdown editing is not supported by this API.
-- Deletion uses `DELETE` on the document endpoint. Treat it as destructive: only delete when explicitly requested and verify the HTTP status. Avoid automatically retrying a `POST` after a timeout because it may create a duplicate.
-- Inspect the actual HTTP status and response body for every write; never claim success from a command alone. `write:collab_docs` includes read access, but token scopes do not replace required Docs enrollment or feature-flag access.
-
 ## Testing with Feature Flags
 
 CI environments run tests with all feature flags enabled. When making changes and running tests, account for this by toggling any relevant flags on or off. To run tests with all flags enabled locally, pass `TEST_ALL_FEATURES=1`.
