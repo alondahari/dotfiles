@@ -1,5 +1,10 @@
 # Copilot Instructions
 
+## Response Style
+
+- At the start of every new Copilot session, load and follow the installed `caveman` skill by default.
+- If I say `stop caveman` or `normal mode`, stop using Caveman for the rest of that session unless I explicitly ask to enable it again.
+
 ## Language Preferences
 - All scripts and tooling MUST be written in Node.js/JavaScript
 - Do NOT create Python scripts unless explicitly requested
