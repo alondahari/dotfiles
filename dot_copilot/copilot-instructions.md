@@ -37,15 +37,15 @@
 
 ### Reviewer-friendly descriptions
 
-- Describe the final diff, not the history of developing it.
-- Write like a friendly teammate who respects the reviewer's time. Lead with what changed and why. Make the description understandable without reading linked issues or previous conversations.
-- Use plain language and short paragraphs. Explain only the behavior, boundaries, tradeoffs, and rollout concerns needed to review the change.
-- Call out non-obvious decisions, tradeoffs, or risks. When focused feedback would help, point to the specific behavior or part of the diff and say why it matters.
-- Avoid commit SHAs, intermediate fixes, environment identifiers, setup logs, and cleanup history.
+- Write like a friendly teammate who respects the reviewer's time. Lead with what changed and why: a self-contained snapshot of the final diff for someone with no session context, not a development diary.
+- Use plain language and short paragraphs. Explain only the behavior, essential boundaries, non-obvious decisions, tradeoffs, and rollout risks. When focused feedback would help, name the specific behavior and why it matters.
+- Avoid unexplained references to follow-ups, prior heads, or review fixes, as well as commit SHAs, environment identifiers, setup logs, cleanup history, and routine lint output.
+- Keep verification honest and scoped to the current revision; earlier-head evidence does not verify current code. State any remaining gap or blocker in one concrete sentence naming the affected behavior, not environment provisioning or promises of future checks. Do not hide relevant verification gaps.
+- Keep the main description to the change, why it matters, essential boundaries and risks, and a short verification summary. Preserve required exact hands-on evidence, reproducibility, captions, and redaction in a clearly labeled evidence subsection, collapsible block, or linked durable artifact; edit that evidence for concision first.
+- When reproduction instructions are needed, including below evidence tables, use a short numbered sequence with fenced commands or requests and explicit expected results, not a dense paragraph of setup, fixtures, headers, and payloads. Include only necessary setup; do not repeat a table in prose.
 - Link issues only when useful. Explain the relevant requirement or decision inline; never make the link carry essential context.
 - Follow the repository template without adding repetitive prose. Omit optional, inapplicable sections when the template permits it.
-- Aim for roughly 200–400 words of reviewer-facing prose. Add detail only when it materially helps review; collapsing text is not a substitute
-  for editing it.
+- Prefer a few concise paragraphs, with roughly 400 words as an upper guide for reviewer-facing prose, not a quota. Do not pad simple changes. Keep required exact evidence separately as above; collapsing text is not a substitute for editing it.
 - Before publishing, remove repetition, unexplained jargon, and anything
   that belongs in an implementation log rather than a PR description.
 - Be warm and factual without overdoing thanks, praising your own work, making demands, or overstating certainty.
