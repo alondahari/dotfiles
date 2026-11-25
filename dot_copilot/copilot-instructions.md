@@ -25,6 +25,9 @@
 
 ## Pull Request Workflow and Required Verification
 
+- When session code work is ready, automatically open a draft PR with a reviewer-friendly description (or update the existing PR) without waiting for a separate request, then request a Copilot code review. Respect explicit holds and do not apply this to chezmoi changes, which land on `main` per System Configuration.
+- Then shepherd the draft PR until its current head is ready for my review without my interaction: resolve merge conflicts, address actionable review comments per "Addressing PR Review Comments", and fix failed CI caused by the change. Use supported durable monitoring, such as Agent merge for review, CI, and conflicts, when available; never use it to merge. Do not claim monitoring continues once the session stops.
+- Never merge, mark ready, bypass or disable checks, or change unrelated code to get CI green. Report genuine blockers, flaky or pre-existing failures, permission issues, and any human comments awaiting my reply; do not call the PR fully ready while those remain.
 - For PR work, first commit and push changes, then open a draft PR (or update the existing PR), then run required hands-on Codespace verification and targeted tests so CI can run in parallel. Do not delay the push or PR for validation; this ordering does not broaden when tests are required by the applicable testing instructions.
 - Create and keep PRs as drafts unless I explicitly request ready-for-review or manually mark them ready. Do not automatically mark PRs ready after verification.
 - After opening or updating the PR, verify the actual changed behavior hands-on in a dedicated GitHub Codespace. Automated tests alone do not satisfy this requirement. Use the browser, API, CLI, or other interface relevant to the change.
