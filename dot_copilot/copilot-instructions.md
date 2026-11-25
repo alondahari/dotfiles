@@ -40,6 +40,7 @@
 
 ## Pull Request Descriptions
 
+- Keep PR titles short and simple: ideally 2-4 words, and the shorter the better. They need not be fully descriptive; the description carries the detail. For example, prefer "Enforce max noodle collaborators" over "Cap personal noodle collaborators before granting access".
 - When creating or updating PRs, keep automated-test summaries concise: say "Validated with tests" rather than enumerating test files, commands, run counts, or assertion counts unless I explicitly request those details. This does not replace the required hands-on verification steps and evidence above.
 - Give PR screenshots and recordings a concise caption explaining what behavior they demonstrate and why it matters to the change. Retain useful alt text.
 - Show verification screenshots and videos inline in the PR description, outside any collapsible `<details>` block or other folded section, so reviewers see them without expanding anything.
