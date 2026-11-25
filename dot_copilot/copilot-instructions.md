@@ -42,6 +42,7 @@
 
 - When creating or updating PRs, keep automated-test summaries concise: say "Validated with tests" rather than enumerating test files, commands, run counts, or assertion counts unless I explicitly request those details. This does not replace the required hands-on verification steps and evidence above.
 - Give PR screenshots and recordings a concise caption explaining what behavior they demonstrate and why it matters to the change. Retain useful alt text.
+- Show verification screenshots and videos inline in the PR description, outside any collapsible `<details>` block or other folded section, so reviewers see them without expanding anything.
 
 ### Reviewer-friendly descriptions
 
@@ -49,7 +50,7 @@
 - Use plain language and short paragraphs. Explain only the behavior, essential boundaries, non-obvious decisions, tradeoffs, and rollout risks. When focused feedback would help, name the specific behavior and why it matters.
 - Avoid unexplained references to follow-ups, prior heads, or review fixes, as well as commit SHAs, environment identifiers, setup logs, cleanup history, and routine lint output.
 - Keep verification honest and scoped to the current revision; earlier-head evidence does not verify current code. State any remaining gap or blocker in one concrete sentence naming the affected behavior, not environment provisioning or promises of future checks. Do not hide relevant verification gaps.
-- Keep the main description to the change, why it matters, essential boundaries and risks, and a short verification summary. Preserve required exact hands-on evidence, reproducibility, captions, and redaction in a clearly labeled evidence subsection, collapsible block, or linked durable artifact; edit that evidence for concision first.
+- Keep the main description to the change, why it matters, essential boundaries and risks, and a short verification summary. Preserve required exact hands-on evidence, reproducibility, captions, and redaction in a clearly labeled evidence subsection, collapsible block, or linked durable artifact; edit that evidence for concision first. Only nonvisual evidence (such as API transcripts or command output) may be collapsed or linked; keep screenshots and videos visible inline.
 - When reproduction instructions are needed, including below evidence tables, use a short numbered sequence with fenced commands or requests and explicit expected results, not a dense paragraph of setup, fixtures, headers, and payloads. Include only necessary setup; do not repeat a table in prose.
 - Link issues only when useful. Explain the relevant requirement or decision inline; never make the link carry essential context.
 - Follow the repository template without adding repetitive prose. Omit optional, inapplicable sections when the template permits it.
