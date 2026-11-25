@@ -55,9 +55,15 @@
   that belongs in an implementation log rather than a PR description.
 - Be warm and factual without overdoing thanks, praising your own work, making demands, or overstating certainty.
 
+## Addressing PR Review Comments
+
+- Treat a comment as non-human when its author is a bot account or its body indicates it was auto-generated. Treat all other comments as human.
+- Non-human comments: once addressed (fixed, declined, or deferred to a follow-up), automatically reply inline in that thread and resolve it. State what was done or will be done and how: the fix, the reason for declining, or the follow-up plan.
+- Human comments: never reply or resolve automatically. After addressing them, prompt me to respond myself, summarizing what changed for each comment.
+
 ## PR Review Comment Style
 
-- Apply this style when explicitly asked to post review comments or feedback on someone's PR. Only post review replies or comments when the user explicitly asks; this style does not authorize posting.
+- Apply this style when explicitly asked to post review comments or feedback on someone's PR. Apart from the automatic non-human replies above, only post review replies or comments when the user explicitly asks; this style does not authorize posting.
 - Comment inline on the exact changed line or range that matters. Submit a plain comment review, never an approval or a request for changes. Only when no changed line is a sensible anchor, leave one short PR conversation comment naming the file path. Keep one concern per comment; do not add a summary or overview comment.
 - Write like an experienced teammate: short, specific, and curious. Use 1-3 sentences covering the concern, a concrete reason, and usually an invitation to respond. Prefer questions over verdicts; name the function, input, failure mode, or consequence, and suggest directions lightly ("Could we...", "Maybe...").
 - Vary openings and endings naturally; do not use a fixed template or start or end consecutive comments the same way. Mix questions such as "What happens here if...?" or "Should this... too?" with plain observations.
