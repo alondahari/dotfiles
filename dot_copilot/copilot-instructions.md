@@ -26,11 +26,10 @@
 ## Pragmatism Over Exhaustiveness
 
 - Build the main path first. Don't harden edge cases before core behavior works end to end.
-- Before handling an edge case, race condition, or defensive guard, weigh how likely it is and how bad the outcome would be against the complexity, code, and tests it adds. Handle it only if it is realistic (seen in production, reachable by normal use) or the failure is severe (data loss, security, auth bypass, corruption).
-- Otherwise skip it. Rely on existing framework, DB constraints, and upstream validation instead of re-checking. Mention notable skipped cases in one line in the PR description, not in code.
+- Skip extra handling when a framework guarantee, DB constraint, or upstream validation already covers the case; don't re-check it. Mention notable skipped cases in one line in the PR description, not in code.
+- Otherwise, before implementing an identified edge case, race condition, or defensive guard, ask me one clear, simple question: what can happen, how likely it is, the impact, and the tradeoffs of handling versus skipping it. Wait for my decision before implementing.
 - Prefer simple code that fails loudly over complex code that handles rare states silently.
-- When unsure whether a case matters, ask me rather than implementing it.
-- Review comments (bot or human) suggesting speculative edge cases, races, or extra guards are not automatically actionable. Apply the same tradeoff. For bot comments, decline briefly in-thread with the reason (unlikely, low impact, or not worth the complexity) and resolve.
+- Apply the same rule to review comments (bot or human) suggesting edge cases, races, or extra guards: skip them when existing guarantees cover the case, otherwise ask me first. A pending decision is not a decline; leave the thread open until I decide.
 
 ## Pull Request Workflow and Required Verification
 
