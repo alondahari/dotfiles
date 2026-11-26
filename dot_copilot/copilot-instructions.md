@@ -23,10 +23,19 @@
 - When addressing PR review feedback, make a separate commit for each addressed review comment; do not combine fixes for multiple comments in one commit.
 - Keep commits small and focused on one logical change. Use concise, descriptive imperative commit subjects, adding a body only when it provides useful context.
 
+## Pragmatism Over Exhaustiveness
+
+- Build the main path first. Don't harden edge cases before core behavior works end to end.
+- Before handling an edge case, race condition, or defensive guard, weigh how likely it is and how bad the outcome would be against the complexity, code, and tests it adds. Handle it only if it is realistic (seen in production, reachable by normal use) or the failure is severe (data loss, security, auth bypass, corruption).
+- Otherwise skip it. Rely on existing framework, DB constraints, and upstream validation instead of re-checking. Mention notable skipped cases in one line in the PR description, not in code.
+- Prefer simple code that fails loudly over complex code that handles rare states silently.
+- When unsure whether a case matters, ask me rather than implementing it.
+- Review comments (bot or human) suggesting speculative edge cases, races, or extra guards are not automatically actionable. Apply the same tradeoff. For bot comments, decline briefly in-thread with the reason (unlikely, low impact, or not worth the complexity) and resolve.
+
 ## Pull Request Workflow and Required Verification
 
 - When session code work is ready, automatically open a draft PR with a reviewer-friendly description (or update the existing PR) without waiting for a separate request, then request a Copilot code review. Respect explicit holds and do not apply this to chezmoi changes, which land on `main` per System Configuration.
-- Then shepherd the draft PR until its current head is ready for my review without my interaction: resolve merge conflicts, address actionable review comments per "Addressing PR Review Comments", and fix failed CI caused by the change. Use supported durable monitoring, such as Agent merge for review, CI, and conflicts, when available; never use it to merge. Do not claim monitoring continues once the session stops.
+- Then shepherd the draft PR until its current head is ready for my review without my interaction: resolve merge conflicts, address actionable review comments per "Addressing PR Review Comments" and "Pragmatism Over Exhaustiveness", and fix failed CI caused by the change. Use supported durable monitoring, such as Agent merge for review, CI, and conflicts, when available; never use it to merge. Do not claim monitoring continues once the session stops.
 - Never merge, mark ready, bypass or disable checks, or change unrelated code to get CI green. Report genuine blockers, flaky or pre-existing failures, permission issues, and any human comments awaiting my reply; do not call the PR fully ready while those remain.
 - For PR work, first commit and push changes, then open a draft PR (or update the existing PR), then run required hands-on Codespace verification and targeted tests so CI can run in parallel. Do not delay the push or PR for validation; this ordering does not broaden when tests are required by the applicable testing instructions.
 - Create and keep PRs as drafts unless I explicitly request ready-for-review or manually mark them ready. Do not automatically mark PRs ready after verification.
