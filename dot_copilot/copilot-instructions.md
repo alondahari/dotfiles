@@ -27,6 +27,7 @@
 
 - Build the main path first. Don't harden edge cases before core behavior works end to end.
 - Skip extra handling when a framework guarantee, DB constraint, or upstream validation already covers the case; don't re-check it. Mention notable skipped cases in one line in the PR description, not in code.
+- Before asking, check the real code path or available production evidence. If the case only appears in a test fake or you can't confirm it, say so and give your recommendation.
 - Otherwise, before implementing an identified edge case, race condition, or defensive guard, ask me one clear, simple question: what can happen, how likely it is, the impact, and the tradeoffs of handling versus skipping it. Wait for my decision before implementing.
 - Prefer simple code that fails loudly over complex code that handles rare states silently.
 - Apply the same rule to review comments (bot or human) suggesting edge cases, races, or extra guards: skip them when existing guarantees cover the case, otherwise ask me first. A pending decision is not a decline; leave the thread open until I decide.
